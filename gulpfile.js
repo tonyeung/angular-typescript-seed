@@ -19,11 +19,15 @@
   var runSequence = require('run-sequence');
   var del = require('del');
   var plumber = require('gulp-plumber');
-  
+
   var ts = require('gulp-typescript');
   var addStream = require('add-stream').obj;
   var concat = require('gulp-concat');
   var uglify = require('gulp-uglify');
+
+  var sourcemaps = require('gulp-sourcemaps');
+  var less = require('gulp-less');
+  var minifyCss = require('gulp-minify-css');
 
   var templateCache = require('gulp-angular-templatecache');
 
@@ -31,8 +35,9 @@
   // MAIN TASKS
   gulp.task('default', function(callback) {
     runSequence('clean',
-                ['process-code'],//, 'process-styles', 'move-fonts', 'move-static-resources'],
-                //'watch',
+                ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
+                'watch',
+                'watch-tests',
                 callback);
   });
 
@@ -47,7 +52,11 @@
   // COMPONENT TASKS
   gulp.task('clean', clean);
   gulp.task('process-code', processCode);
+  gulp.task('process-styles', processStyles);
+  gulp.task('move-fonts', moveFonts);
+  gulp.task('move-static-content', moveStaticContent);
   gulp.task('watch', watch);
+  gulp.task('watch-tests', watchTests);
 
 
   // TASK IMPLEMENTATIONS
@@ -75,6 +84,36 @@
     return gulp.src(['src/app/**/*.html','!src/app/common/templates/index.htnml'])
                 .pipe(plumber())
                 .pipe(templateCache());
+  }
+
+  function processStyles() {
+    return gulp.src(config.cssFiles)
+                .pipe(plumber())
+                // construct app.css
+                .pipe(sourcemaps.init())
+                .pipe(addStream(gulp.src(config.lessFiles)))
+                .pipe(less())
+                .pipe(sourcemaps.write())
+                .pipe(concat('app.css'))
+                // output to dev
+                .pipe(gulp.dest('dev/css/'))
+                // minify and output to dist
+                .pipe(minifyCss())
+                .pipe(gulp.dest('dist/css/'));
+  }
+
+  function moveFonts() {
+    return gulp.src(config.fontFiles)
+                .pipe(plumber())
+                .pipe(gulp.dest('dev/fonts/'))
+                .pipe(gulp.dest('dist/fonts/'));
+  }
+
+  function moveStaticContent() {
+    return gulp.src(config.staticContent)
+                .pipe(plumber())
+                .pipe(gulp.dest('dev/'))
+                .pipe(gulp.dest('dist/'));
   }
 
   function watch() {
