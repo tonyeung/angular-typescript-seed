@@ -1,0 +1,1 @@
+tsd query -r -o - a install angular -s
