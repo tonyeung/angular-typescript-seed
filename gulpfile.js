@@ -1,14 +1,13 @@
 /*
  * NOTES
- * Web Server
- * This gulp file does not run a server
- * A simple http server is expected with the dev or dist folder as its root
- *
  * ngAnnotate
  * snippets/templates should be used for new angular functions
- *
- * Linting
- * Relying on VSCode's intellisense for pre transpile linting
+ * 
+ * source maps
+ * source maps are generated for both dev and dist because
+ * all the css/javascript files are concatenated
+ * dev is left as is, dist is uglified
+ * I am assuming automated deployments know to exclude *.map files
  */
 
 (function() {
@@ -19,8 +18,9 @@
   var runSequence = require('run-sequence');
   var del = require('del');
   var plumber = require('gulp-plumber');
-
-  var ts = require('gulp-typescript');
+ 
+  var streamqueue = require('streamqueue');
+  var tsc = require('gulp-typescript');
   var addStream = require('add-stream').obj;
   var concat = require('gulp-concat');
   var uglify = require('gulp-uglify');
@@ -30,15 +30,42 @@
   var minifyCss = require('gulp-minify-css');
 
   var templateCache = require('gulp-angular-templatecache');
+  var historyApiFallback = require('connect-history-api-fallback');
+  var browserSyncDev = require('browser-sync').create('dev');
+  var reloadDev = browserSyncDev.reload;
+  var browserSyncDist = require('browser-sync').create('dist');
+  var reloadDist = browserSyncDist.reload;
 
 
   // MAIN TASKS
-  gulp.task('default', function(callback) {
-    runSequence('clean',
-                ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
-                'watch',
-                'watch-tests',
-                callback);
+  gulp.task('default', function(callback) {  
+    // initialize the dev servers
+    browserSyncDev.init({
+      port: 8000,
+      ui: false,
+      server: {
+        baseDir: "./dev",
+        middleware: [historyApiFallback()]
+      }
+    });
+  
+    browserSyncDist.init({
+      port: 9000,
+      ui: false,
+      server: {
+        baseDir: "./dist",
+        middleware: [historyApiFallback()]
+      }
+    });
+    
+    // reload the browser on change
+    gulp.watch(['dev/*'], ['']).on('change', reloadDev);                
+    gulp.watch(['dist/*'], ['']).on('change', reloadDist);
+    gulp.watch(['src/**/*', 'tests/**/*.ts'], ['build']);
+    gulp.watch(['tests/**/*.ts'], ['ut']);
+                  
+    // build
+    runSequence('build');
   });
 
   gulp.task('ut', function(callback) {
@@ -57,48 +84,56 @@
   gulp.task('move-static-content', moveStaticContent);
   gulp.task('watch', watch);
   gulp.task('watch-tests', watchTests);
-
-
-  // TASK IMPLEMENTATIONS
+  gulp.task('build', build);
+  
+  // TASK IMPLEMENTATIONS  
+  function build (callback) {    
+    runSequence('clean',
+                ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
+                callback);
+  }
+  
   function clean() {
     return del(['dev/*','dist/*']);
   }
 
   function processCode() {
-    return gulp.src(config.jsFiles)
-                .pipe(plumber())
-                // construct app.js
-                .pipe(concat('app.js'))
-                .pipe(addStream(gulp.src(config.tsFiles)))
-                .pipe(ts(ts.createProject('tsconfig.json')))
-                .pipe(addStream(createTemplateCache()))
-                .pipe(concat('app.js'))
-                // output to dev
-                .pipe(gulp.dest('dev/js/'))
-                // obfuscate and output to dist
-                .pipe(uglify())
-                .pipe(gulp.dest('dist/js/'));
-  }
-
-  function createTemplateCache() {
-    return gulp.src(['src/app/**/*.html','!src/app/common/templates/index.htnml'])
-                .pipe(plumber())
+    var javaScriptStream = gulp.src(config.jsFiles);
+    
+    var typeScriptStream = gulp.src(config.tsFiles)
+                .pipe(tsc(tsc.createProject('tsconfig.json')));
+                  
+    var templateCacheStream = gulp.src(['src/app/**/*.html','!src/app/common/index.htnml'])
                 .pipe(templateCache());
+                  
+    return streamqueue({ objectMode: true }, javaScriptStream, typeScriptStream, templateCacheStream)
+                // output to dev
+                .pipe(sourcemaps.init())
+                .pipe(concat('app.js'))
+                .pipe(sourcemaps.write())
+                .pipe(gulp.dest('dev/js/'))
+                // minify and output to dist
+                .pipe(sourcemaps.init())
+                .pipe(uglify())
+                .pipe(sourcemaps.write('.'))
+                .pipe(gulp.dest('dist/js/'));
   }
 
   function processStyles() {
     return gulp.src(config.cssFiles)
                 .pipe(plumber())
-                // construct app.css
-                .pipe(sourcemaps.init())
                 .pipe(addStream(gulp.src(config.lessFiles)))
                 .pipe(less())
-                .pipe(sourcemaps.write())
+                // construct app.css
+                .pipe(sourcemaps.init())
                 .pipe(concat('app.css'))
+                .pipe(sourcemaps.write())
                 // output to dev
                 .pipe(gulp.dest('dev/css/'))
                 // minify and output to dist
+                .pipe(sourcemaps.init())
                 .pipe(minifyCss())
+                .pipe(sourcemaps.write('.'))
                 .pipe(gulp.dest('dist/css/'));
   }
 
@@ -117,7 +152,7 @@
   }
 
   function watch() {
-    return gulp.watch(['src/**/*', 'tests/**/*.ts'], ['default']);
+    return gulp.watch(['src/**/*', 'tests/**/*.ts'], ['build']);
   }
 
   function watchTests() {

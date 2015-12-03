@@ -1,3 +1,7 @@
-(function() {
-	console.log('app.js');
-})();
+namespace app {
+  'use strict';
+  
+  angular.module('app', [
+    'app.core'
+  ]);
+}
