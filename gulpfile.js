@@ -21,7 +21,6 @@
  
   var streamqueue = require('streamqueue');
   var tsc = require('gulp-typescript');
-  var addStream = require('add-stream').obj;
   var concat = require('gulp-concat');
   var uglify = require('gulp-uglify');
 
@@ -99,11 +98,14 @@
   }
 
   function processStyles() {
-    return gulp.src(config.cssFiles)
-                .pipe(plumber())
-                .pipe(addStream(gulp.src(config.lessFiles)))
+    var cssStream =  gulp.src(config.cssFiles);
+    var lessStream = gulp.src(config.lessFiles)
+                .pipe(sourcemaps.init())
                 .pipe(less())
-                // construct app.css
+                .pipe(sourcemaps.write());
+                
+    return streamqueue({ objectMode: true }, cssStream, lessStream)
+                // output to dev
                 .pipe(sourcemaps.init())
                 .pipe(concat('app.css'))
                 .pipe(sourcemaps.write())
