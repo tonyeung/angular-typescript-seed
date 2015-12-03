@@ -26,6 +26,7 @@
   var uglify = require('gulp-uglify');
 
   var sourcemaps = require('gulp-sourcemaps');
+  var jshint = require('gulp-jshint');
   var less = require('gulp-less');
   var minifyCss = require('gulp-minify-css');
 
@@ -38,34 +39,8 @@
 
 
   // MAIN TASKS
-  gulp.task('default', function(callback) {  
-    // initialize the dev servers
-    browserSyncDev.init({
-      port: 8000,
-      ui: false,
-      server: {
-        baseDir: "./dev",
-        middleware: [historyApiFallback()]
-      }
-    });
-  
-    browserSyncDist.init({
-      port: 9000,
-      ui: false,
-      server: {
-        baseDir: "./dist",
-        middleware: [historyApiFallback()]
-      }
-    });
-    
-    // reload the browser on change
-    gulp.watch(['dev/*'], ['']).on('change', reloadDev);                
-    gulp.watch(['dist/*'], ['']).on('change', reloadDist);
-    gulp.watch(['src/**/*', 'tests/**/*.ts'], ['build']);
-    gulp.watch(['tests/**/*.ts'], ['ut']);
-                  
-    // build
-    runSequence('build');
+  gulp.task('default', function(callback) { 
+    runSequence('build', ['watch', 'watch-tests'], 'browser-sync');
   });
 
   gulp.task('ut', function(callback) {
@@ -77,14 +52,15 @@
   });
 
   // COMPONENT TASKS
+  gulp.task('build', build);
   gulp.task('clean', clean);
   gulp.task('process-code', processCode);
   gulp.task('process-styles', processStyles);
   gulp.task('move-fonts', moveFonts);
   gulp.task('move-static-content', moveStaticContent);
+  gulp.task('browser-sync', browserSync);
   gulp.task('watch', watch);
   gulp.task('watch-tests', watchTests);
-  gulp.task('build', build);
   
   // TASK IMPLEMENTATIONS  
   function build (callback) {    
@@ -98,7 +74,10 @@
   }
 
   function processCode() {
-    var javaScriptStream = gulp.src(config.jsFiles);
+    var javaScriptStream = gulp.src(config.jsFiles)
+                .pipe(jshint())
+                .pipe(jshint.reporter('jshint-stylish'))
+                .pipe(jshint.reporter('fail'));
     
     var typeScriptStream = gulp.src(config.tsFiles)
                 .pipe(tsc(tsc.createProject('tsconfig.json')));
@@ -149,6 +128,30 @@
                 .pipe(plumber())
                 .pipe(gulp.dest('dev/'))
                 .pipe(gulp.dest('dist/'));
+  }
+  
+  function browserSync() {
+    browserSyncDev.init({
+      port: 8000,
+      ui: false,
+      server: {
+        baseDir: "./dev",
+        middleware: [historyApiFallback()]
+      }
+    });
+  
+    browserSyncDist.init({
+      port: 9000,
+      ui: false,
+      server: {
+        baseDir: "./dist",
+        middleware: [historyApiFallback()]
+      }
+    });
+    
+    // reload the browser on compiled change
+    gulp.watch(['dev/*'], ['']).on('change', reloadDev);                
+    gulp.watch(['dist/*'], ['']).on('change', reloadDist);
   }
 
   function watch() {
