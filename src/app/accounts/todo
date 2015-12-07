@@ -1,0 +1,6 @@
+-routes
+-login
+-register
+-logout
+-list(admin) | crud
+-settings
