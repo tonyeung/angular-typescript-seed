@@ -1,13 +1,3 @@
-/*
- * NOTES
- *
- * source maps are generated for both dev and dist because
- * all the css/javascript files are concatenated
- * dev is left as is, dist is uglified
- * I am assuming automated deployments know to exclude *.map files
- *
- */
-
 (function() {
 
   var gulp = require('gulp');
@@ -35,10 +25,14 @@
   var browserSyncDist = require('browser-sync').create('dist');
   var reloadDist = browserSyncDist.reload;
 
-
+  ///////////////////////////////////////////////////////
   // MAIN TASKS
   gulp.task('default', function(callback) {
-    runSequence('build', ['watch', 'watch-tests'],'browser-sync', callback);
+    runSequence('build',
+                  ['watch', 'watch-tests'],
+                  'browser-sync',
+                  //'ut'
+                  callback);
   });
 
   gulp.task('ut', function(callback) {
@@ -49,6 +43,7 @@
     //runSequence();
   });
 
+  ///////////////////////////////////////////////////////
   // COMPONENT TASKS
   gulp.task('build', build);
   gulp.task('clean', clean);
@@ -60,6 +55,7 @@
   gulp.task('watch', watch);
   gulp.task('watch-tests', watchTests);
 
+  ///////////////////////////////////////////////////////
   // TASK IMPLEMENTATIONS
   function build (callback) {
     runSequence('clean',
@@ -97,6 +93,7 @@
                 .pipe(gulp.dest('dist/js/'));
   }
 
+  ///////////////////////////////////////////////////////
   function processStyles() {
     var cssStream =  gulp.src(config.cssFiles);
     var lessStream = gulp.src(config.lessFiles)
@@ -118,6 +115,7 @@
                 .pipe(gulp.dest('dist/css/'));
   }
 
+  ///////////////////////////////////////////////////////
   function moveFonts() {
     return gulp.src(config.fontFiles)
                 .pipe(plumber())
@@ -125,6 +123,7 @@
                 .pipe(gulp.dest('dist/fonts/'));
   }
 
+  ///////////////////////////////////////////////////////
   function moveStaticContent() {
     return gulp.src(config.staticContent)
                 .pipe(plumber())
@@ -132,6 +131,7 @@
                 .pipe(gulp.dest('dist/'));
   }
 
+  ///////////////////////////////////////////////////////
   function browserSync() {
     var reloadDevTO;
     var reloadDistTO;
@@ -178,10 +178,12 @@
     }
   }
 
+  ///////////////////////////////////////////////////////
   function watch() {
     return gulp.watch(['src/**/*', 'tests/**/*.ts'], ['build']);
   }
 
+  ///////////////////////////////////////////////////////
   function watchTests() {
     return gulp.watch(['tests/**/*.ts'], ['ut']);
   }
