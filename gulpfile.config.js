@@ -14,9 +14,11 @@ module.exports = {
         'bower_components/angular-local-storage/dist/angular-local-storage.js',
         'bower_components/toastr/toastr.js'
 		],
-		
+
 	tsFiles: [
 		'typings/**/*.d.ts',
+		'src/app.core/app.core.ts',
+		'src/app/app.ts',
 		'src/app.core/**/*.ts',
 		'src/app/**/*.ts',
 		'src/**/*.ts'
@@ -41,6 +43,6 @@ module.exports = {
 
 	staticContent: [
 		'src/assets/**/*',
-		'src/app/common/index.html'
+		'src/app/index.html'
 	]
 }

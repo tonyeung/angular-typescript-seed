@@ -1,13 +1,11 @@
 /*
  * NOTES
- * ngAnnotate
- * snippets/templates should be used for new angular functions
- * 
- * source maps
+ *
  * source maps are generated for both dev and dist because
  * all the css/javascript files are concatenated
  * dev is left as is, dist is uglified
  * I am assuming automated deployments know to exclude *.map files
+ *
  */
 
 (function() {
@@ -18,9 +16,10 @@
   var runSequence = require('run-sequence');
   var del = require('del');
   var plumber = require('gulp-plumber');
- 
+
   var streamqueue = require('streamqueue');
   var tsc = require('gulp-typescript');
+  var ngAnnotate = require('gulp-ng-annotate');
   var concat = require('gulp-concat');
   var uglify = require('gulp-uglify');
 
@@ -38,8 +37,8 @@
 
 
   // MAIN TASKS
-  gulp.task('default', function(callback) { 
-    runSequence('build', ['watch', 'watch-tests'], 'browser-sync');
+  gulp.task('default', function(callback) {
+    runSequence('build', ['watch', 'watch-tests'],'browser-sync', callback);
   });
 
   gulp.task('ut', function(callback) {
@@ -60,14 +59,14 @@
   gulp.task('browser-sync', browserSync);
   gulp.task('watch', watch);
   gulp.task('watch-tests', watchTests);
-  
-  // TASK IMPLEMENTATIONS  
-  function build (callback) {    
+
+  // TASK IMPLEMENTATIONS
+  function build (callback) {
     runSequence('clean',
                 ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
                 callback);
   }
-  
+
   function clean() {
     return del(['dev/*','dist/*']);
   }
@@ -77,15 +76,16 @@
                 .pipe(jshint())
                 .pipe(jshint.reporter('jshint-stylish'))
                 .pipe(jshint.reporter('fail'));
-    
+
     var typeScriptStream = gulp.src(config.tsFiles)
                 .pipe(tsc(tsc.createProject('tsconfig.json')));
-                  
-    var templateCacheStream = gulp.src(['src/app/**/*.html','!src/app/common/index.htnml'])
+
+    var templateCacheStream = gulp.src(['src/app/**/*.html','!src/app/index.html'])
                 .pipe(templateCache());
-                  
+
     return streamqueue({ objectMode: true }, javaScriptStream, typeScriptStream, templateCacheStream)
                 // output to dev
+                .pipe(ngAnnotate())
                 .pipe(sourcemaps.init())
                 .pipe(concat('app.js'))
                 .pipe(sourcemaps.write())
@@ -103,7 +103,7 @@
                 .pipe(sourcemaps.init())
                 .pipe(less())
                 .pipe(sourcemaps.write());
-                
+
     return streamqueue({ objectMode: true }, cssStream, lessStream)
                 // output to dev
                 .pipe(sourcemaps.init())
@@ -131,8 +131,10 @@
                 .pipe(gulp.dest('dev/'))
                 .pipe(gulp.dest('dist/'));
   }
-  
+
   function browserSync() {
+    var reloadDevTO;
+    var reloadDistTO;
     browserSyncDev.init({
       port: 8000,
       ui: false,
@@ -141,7 +143,7 @@
         middleware: [historyApiFallback()]
       }
     });
-  
+
     browserSyncDist.init({
       port: 9000,
       ui: false,
@@ -150,10 +152,30 @@
         middleware: [historyApiFallback()]
       }
     });
-    
+
     // reload the browser on compiled change
-    gulp.watch(['dev/*'], ['']).on('change', reloadDev);                
-    gulp.watch(['dist/*'], ['']).on('change', reloadDist);
+    gulp.watch('dev/*').on('change', delayReloadDev);
+    gulp.watch('dist/*').on('change', delayReloadDist);
+
+    function delayReloadDev(){
+      if (reloadDevTO) {
+        clearTimeout(reloadDevTO);
+        reloadDevTO = undefined;
+      }
+      reloadDevTO = setTimeout(function() {
+        reloadDev();
+      }, 10000);
+    }
+
+    function delayReloadDist(){
+      if (reloadDistTO) {
+        clearTimeout(reloadDistTO);
+        reloadDevTO = undefined;
+      }
+      reloadDistTO = setTimeout(function() {
+        reloadDist();
+      }, 10000);
+    }
   }
 
   function watch() {
