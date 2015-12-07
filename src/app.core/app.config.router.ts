@@ -4,7 +4,7 @@ namespace app.core {
 	angular
 		.module('app.core')
 		.run(SetUiRouterOnRoot)
-		.config(ConfigureHtml5Mode);
+		.config(ConfigureRouting);
 
 	function SetUiRouterOnRoot ($rootScope, $state, $stateParams) {
 		$rootScope.$state = $state;
@@ -13,7 +13,8 @@ namespace app.core {
   		$rootScope.$on("$stateChangeError", console.log.bind(console));
 	}
 
-	function ConfigureHtml5Mode($locationProvider: angular.ILocationProvider) {
+	function ConfigureRouting($locationProvider: angular.ILocationProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
 		$locationProvider.html5Mode(true);
+		$urlRouterProvider.otherwise("/dashboard");
 	}
 }
