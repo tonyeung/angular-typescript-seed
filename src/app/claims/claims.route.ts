@@ -7,11 +7,11 @@ namespace app {
 
 	function ConfigureState($stateProvider: ng.ui.IStateProvider) {
 		$stateProvider
-			.state("dashboard", {
-				url: "/",
-				templateUrl: "home/dashboard.html",
+			.state("claims", {
+				url: "/claims",
+				templateUrl: "claims/claims.html",
 				data: {
-					pageTitle: "Dashboard"
+					pageTitle: "Claims"
 				}
 			})
 	}
