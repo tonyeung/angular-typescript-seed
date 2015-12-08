@@ -1,9 +1,3 @@
-/// <reference path="typings/gulp/gulp.d.ts" />
-/// <reference path="typings/node/node.d.ts" />
-/// <reference path="typings/orchestrator/orchestrator.d.ts" />
-/// <reference path="typings/q/Q.d.ts" />
-
-
 (function() {
 
   var gulp = require('gulp');
@@ -32,6 +26,7 @@
   var reloadDist = browserSyncDist.reload;
   
   var KarmaServer = require('karma').Server;
+  var protractor = require("gulp-protractor").protractor;
 
   ///////////////////////////////////////////////////////
   // MAIN TASKS
@@ -60,6 +55,7 @@
   gulp.task('watch-tests', watchTests);
   
   gulp.task('unit-tests', unitTests);
+  gulp.task('end2end', end2end);
 
   ///////////////////////////////////////////////////////
   // BUILD TASK IMPLEMENTATIONS
@@ -195,11 +191,22 @@
   }
 
   ///////////////////////////////////////////////////////
-  // UNIT TEST TASK IMPLEMENTATIONS
+  // TEST TASK IMPLEMENTATIONS
   function unitTests(cb) {
     new KarmaServer({
             configFile: __dirname + '/karma.conf.js',
             singleRun: true
         }, cb).start();
+  }
+  
+  ///////////////////////////////////////////////////////
+  function end2end() {
+    return gulp.src(["e2e-tests/*.js"])
+                .pipe(plumber())
+                .pipe(protractor({
+                  configFile: "protractor.config.js",
+                  args: ['--baseUrl', 'http://localhost:8000']
+                }));
+                //.on('error', function(e) { throw e })
   }
 })();
