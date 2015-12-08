@@ -1,1 +1,2 @@
-tsd query -r -o - a install angular -s
+tsd query -roa install angular -s
+tsd install bardjs -ros

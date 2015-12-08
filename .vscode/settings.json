@@ -1,3 +1,9 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+	//-------- Files configuration --------
+
+	// Configure glob patterns for excluding files and folders.
+	"files.exclude": {
+		"**/*.js": { "when": "$(basename).ts"}
+	}
 }

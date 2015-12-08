@@ -9,22 +9,22 @@
       "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
     },
     "angularjs/angular.d.ts": {
-      "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
+      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
     },
     "jquery/jquery.d.ts": {
-      "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
+      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
     },
     "bootstrap/bootstrap.d.ts": {
       "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
     },
     "chai/chai.d.ts": {
-      "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
+      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
     },
     "assertion-error/assertion-error.d.ts": {
-      "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
+      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
     },
     "mocha/mocha.d.ts": {
-      "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
+      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
     },
     "toastr/toastr.d.ts": {
       "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
@@ -40,6 +40,9 @@
     },
     "angularjs/angular-mocks.d.ts": {
       "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
+    },
+    "bardjs/bardjs.d.ts": {
+      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
     }
   }
 }

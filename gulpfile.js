@@ -1,3 +1,9 @@
+/// <reference path="typings/gulp/gulp.d.ts" />
+/// <reference path="typings/node/node.d.ts" />
+/// <reference path="typings/orchestrator/orchestrator.d.ts" />
+/// <reference path="typings/q/Q.d.ts" />
+
+
 (function() {
 
   var gulp = require('gulp');
@@ -24,19 +30,17 @@
   var reloadDev = browserSyncDev.reload;
   var browserSyncDist = require('browser-sync').create('dist');
   var reloadDist = browserSyncDist.reload;
+  
+  var KarmaServer = require('karma').Server;
 
   ///////////////////////////////////////////////////////
   // MAIN TASKS
   gulp.task('default', function(callback) {
-    runSequence('build',
-                  ['watch', 'watch-tests'],
-                  'browser-sync',
-                  //'ut'
-                  callback);
+    runSequence('build', 'watch', 'browser-sync', callback);    
   });
 
   gulp.task('ut', function(callback) {
-    //runSequence();
+    runSequence('unit-tests', 'watch-tests', callback);
   });
 
   gulp.task('e2e', function(callback) {
@@ -54,9 +58,11 @@
   gulp.task('browser-sync', browserSync);
   gulp.task('watch', watch);
   gulp.task('watch-tests', watchTests);
+  
+  gulp.task('unit-tests', unitTests);
 
   ///////////////////////////////////////////////////////
-  // TASK IMPLEMENTATIONS
+  // BUILD TASK IMPLEMENTATIONS
   function build (callback) {
     runSequence('clean',
                 ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
@@ -180,11 +186,20 @@
 
   ///////////////////////////////////////////////////////
   function watch() {
-    return gulp.watch(['src/**/*', 'tests/**/*.ts'], ['build']);
+    return gulp.watch(['src/**/*', '!src/**/*.tests.js'], ['build']);
   }
 
   ///////////////////////////////////////////////////////
   function watchTests() {
-    return gulp.watch(['tests/**/*.ts'], ['ut']);
+    return gulp.watch(['src/**/*.tests.js'], ['ut']);
+  }
+
+  ///////////////////////////////////////////////////////
+  // UNIT TEST TASK IMPLEMENTATIONS
+  function unitTests(cb) {
+    new KarmaServer({
+            configFile: __dirname + '/karma.conf.js',
+            singleRun: true
+        }, cb).start();
   }
 })();

@@ -10,3 +10,4 @@
 /// <reference path="mocha/mocha.d.ts" />
 /// <reference path="sinon/sinon.d.ts" />
 /// <reference path="toastr/toastr.d.ts" />
+/// <reference path="bardjs/bardjs.d.ts" />
