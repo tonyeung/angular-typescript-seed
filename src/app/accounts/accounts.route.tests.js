@@ -11,7 +11,6 @@ describe('account routes', function () {
       $templateCache.put(view, '');
     });
     
-    
     bard.verifyNoOutstandingHttpRequests();
 
     it('should map state accounts to url /accounts ', function () {
@@ -26,6 +25,12 @@ describe('account routes', function () {
       $state.go('accounts');
       $rootScope.$apply();
       expect($state.is('accounts'));
+    });
+    
+    it('should have title "Accounts" ', function () {
+      $state.go('accounts');
+      $rootScope.$apply();
+      expect($state.current.data.pageTitle).to.equal('Accounts');
     });
   });
 });

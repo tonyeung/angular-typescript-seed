@@ -29,5 +29,11 @@ describe('dashboard routes', function () {
       $rootScope.$apply();
       expect($state.is('dashboard'));
     });
+    
+    it('should have title "Dashboard" ', function () {
+      $state.go('dashboard');
+      $rootScope.$apply();
+      expect($state.current.data.pageTitle).to.equal('Dashboard');
+    });
   });
 });
