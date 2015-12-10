@@ -31,7 +31,7 @@
   ///////////////////////////////////////////////////////
   // MAIN TASKS
   gulp.task('default', function(callback) {
-    runSequence('build', 'watch', 'browser-sync', callback);    
+    runSequence('build', /*'watch',*/ 'browser-sync', callback);    
   });
 
   gulp.task('ut', function(callback) {
