@@ -16,7 +16,7 @@ module.exports = {
 		],
 
 	tsFiles: [
-		'typings/**/*.d.ts',
+		'typings/tsd.d.ts',
 		'src/app.core/app.core.ts',
 		'src/app/app.ts',
 		'src/app.core/**/*.ts',

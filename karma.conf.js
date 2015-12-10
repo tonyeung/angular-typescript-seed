@@ -19,9 +19,11 @@ module.exports = function(config) {
 	    'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'node_modules/bardjs/dist/bard.js',
       'node_modules/sinon/lib/sinon.js',
       'src/app.core/app.core.js',
+      'src/app.auth/app.auth.js',
       'src/app/app.js',
       'src/**/*.js'
     ],

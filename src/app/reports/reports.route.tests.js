@@ -16,7 +16,6 @@ describe('reports routes', function () {
     bard.verifyNoOutstandingHttpRequests();
 
     it('should map state reports to url /reports ', function () {
-      console.log($state.href('reports', {}));
       expect($state.href('reports', {})).to.equal('/reports');
     });
 

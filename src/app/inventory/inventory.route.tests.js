@@ -16,7 +16,6 @@ describe('inventory routes', function () {
     bard.verifyNoOutstandingHttpRequests();
 
     it('should map state inventory to url /inventory', function () {
-      console.log($state.href('inventory', {}));
       expect($state.href('inventory', {})).to.equal('/inventory');
     });
 

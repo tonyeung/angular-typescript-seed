@@ -14,7 +14,7 @@ var app;
         }
         function ConfigureRouting($locationProvider, $urlRouterProvider) {
             $locationProvider.html5Mode(true);
-            $urlRouterProvider.otherwise("/dashboard");
+            $urlRouterProvider.otherwise("/");
         }
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));

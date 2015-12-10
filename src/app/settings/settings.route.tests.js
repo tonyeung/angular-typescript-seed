@@ -16,7 +16,6 @@ describe('settings routes', function () {
     bard.verifyNoOutstandingHttpRequests();
 
     it('should map state settings to url /settings ', function () {
-      console.log($state.href('settings', {}));
       expect($state.href('settings', {})).to.equal('/settings');
     });
 

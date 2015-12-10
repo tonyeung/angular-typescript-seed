@@ -11,7 +11,5 @@
 /// <reference path="sinon/sinon.d.ts" />
 /// <reference path="toastr/toastr.d.ts" />
 /// <reference path="bardjs/bardjs.d.ts" />
-/// <reference path="angular-protractor/angular-protractor.d.ts" />
-/// <reference path="selenium-webdriver/selenium-webdriver.d.ts" />
 /// <reference path="chai-as-promised/chai-as-promised.d.ts" />
 /// <reference path="promises-a-plus/promises-a-plus.d.ts" />
