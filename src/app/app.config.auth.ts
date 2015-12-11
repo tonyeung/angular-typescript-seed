@@ -9,7 +9,7 @@ namespace app {
 	function ConfigureAuthentication(AuthenticationManagerFactory, Authenticator) {
 		AuthenticationManagerFactory(Authenticator.authenticate);
 	}
-	function ConfigureAuthorization(AuthorizationManager, Authorizer) {
-		AuthorizationManager(Authorizer.authorize);
+	function ConfigureAuthorization(AuthorizationManagerFactory, Authorizer) {
+		AuthorizationManagerFactory(Authorizer.authorize);
 	}
 }

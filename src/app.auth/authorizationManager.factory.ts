@@ -3,36 +3,36 @@ namespace app.auth {
   
   angular
     .module('app.auth')
-    .factory('AuthorizationManager', AuthorizationManager);
+    .factory('AuthorizationManagerFactory', AuthorizationManagerFactory);
     
     export interface IManageAuthorization {}
     
-    export function AuthorizationManager(localStorageService, AuthenticationManagerFactory) {
-        var self = this;
-        self.authorizeLogic = undefined;
+    export function AuthorizationManagerFactory(AuthenticationManagerFactory) {        
+        var authorizeLogic = undefined;
+        var authenticationManager = AuthenticationManagerFactory();
 
         return factory;
 
         function factory(AuthorizeLogic) {      
-            if(!self.authorizeLogic && !AuthorizeLogic) {
+            if(!authorizeLogic && !AuthorizeLogic) {
                 throw new Error("AuthorizeLogic has not been set. If you are seeing self error, the code in app.config.auth.ts is not being run.")
             }
             
             if(AuthorizeLogic) {
-                self.authorizeLogic = AuthorizeLogic;
+                authorizeLogic = AuthorizeLogic;
             }
             
             var serviceObject = {
                 authorize: authorize
             }
-            return serviceObject;            
+            return serviceObject;
 
             function authorize(params) {
-                if(!AuthenticationManagerFactory.isAuthenticated) {
+                if(!authenticationManager.getIsAuthenticated()) {
                     return false;
                 }
                 
-                return self.authorizeLogic(params);
+                return authorizeLogic(params);
             }
         }
     }

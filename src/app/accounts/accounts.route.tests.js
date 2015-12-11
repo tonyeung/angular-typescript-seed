@@ -1,16 +1,16 @@
 describe('account routes', function () {
-  console.log("account routes");
   var expect = chai.expect;
   describe('state', function () {
-    var view = 'accounts/accounts.html';    
-
+    var view = 'accounts/accounts.html'; 
     beforeEach(module('app'));
     
     beforeEach(function () {
       module(function($urlRouterProvider) { $urlRouterProvider.deferIntercept(); });
-      bard.inject(this, '$rootScope', '$state', '$templateCache');
+      bard.inject(this, '$rootScope', '$state', '$templateCache', 'AuthenticationManagerFactory');
       
       $templateCache.put(view, '');
+      authMgr = AuthenticationManagerFactory(function () { return { id: 1 }; });
+      authMgr.authenticate();
     });
     
     bard.verifyNoOutstandingHttpRequests();
