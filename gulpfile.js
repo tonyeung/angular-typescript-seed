@@ -30,9 +30,9 @@
 
   ///////////////////////////////////////////////////////
   // MAIN TASKS
-  gulp.task('default', function(callback) {
-    runSequence('build', /*'watch',*/ 'browser-sync', callback);    
-  });
+  gulp.task('default', build);
+  
+  gulp.task('bs', browserSync);
 
   gulp.task('ut', function(callback) {
     runSequence('unit-tests', 'watch-tests', callback);
@@ -44,13 +44,11 @@
 
   ///////////////////////////////////////////////////////
   // COMPONENT TASKS
-  gulp.task('build', build);
   gulp.task('clean', clean);
   gulp.task('process-code', processCode);
   gulp.task('process-styles', processStyles);
   gulp.task('move-fonts', moveFonts);
   gulp.task('move-static-content', moveStaticContent);
-  gulp.task('browser-sync', browserSync);
   gulp.task('watch', watch);
   gulp.task('watch-tests', watchTests);
   
@@ -60,9 +58,9 @@
   ///////////////////////////////////////////////////////
   // BUILD TASK IMPLEMENTATIONS
   function build (callback) {
-    runSequence('clean',
-                ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
-                callback);
+      runSequence('clean',
+                  ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
+                  callback);
   }
 
   function clean() {
@@ -134,7 +132,7 @@
   }
 
   ///////////////////////////////////////////////////////
-  function browserSync() {
+  function browserSync(callback) {
     var reloadDevTO;
     var reloadDistTO;
     browserSyncDev.init({
@@ -158,23 +156,29 @@
     // reload the browser on compiled change
     gulp.watch('dev/*').on('change', delayReloadDev);
     gulp.watch('dist/*').on('change', delayReloadDist);
+    
+    callback();
 
     function delayReloadDev(){
       if (reloadDevTO) {
+        return;
+      }
+      
+      reloadDevTO = setTimeout(function() {
         clearTimeout(reloadDevTO);
         reloadDevTO = undefined;
-      }
-      reloadDevTO = setTimeout(function() {
         reloadDev();
       }, 10000);
+      
     }
 
     function delayReloadDist(){
       if (reloadDistTO) {
-        clearTimeout(reloadDistTO);
-        reloadDevTO = undefined;
+        return;
       }
       reloadDistTO = setTimeout(function() {
+        clearTimeout(reloadDistTO);
+        reloadDevTO = undefined;
         reloadDist();
       }, 10000);
     }
@@ -182,7 +186,7 @@
 
   ///////////////////////////////////////////////////////
   function watch() {
-    return gulp.watch(['src/**/*', '!src/**/*.tests.js'], ['build']);
+      return gulp.watch(['src/**/*', '!src/**/*.tests.js'], ['build']);
   }
 
   ///////////////////////////////////////////////////////
@@ -192,11 +196,11 @@
 
   ///////////////////////////////////////////////////////
   // TEST TASK IMPLEMENTATIONS
-  function unitTests(cb) {
+  function unitTests(callback) {
     new KarmaServer({
             configFile: __dirname + '/karma.conf.js',
             singleRun: true
-        }, cb).start();
+        }, callback).start();
   }
   
   ///////////////////////////////////////////////////////
