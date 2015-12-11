@@ -8,23 +8,31 @@ namespace app.auth {
     export interface IManageAuthorization {}
     
     export function AuthorizationManager(localStorageService, AuthenticationManagerFactory) {
-        var authorizeLogic;
+        var self = this;
+        self.authorizeLogic = undefined;
 
-        return function (authorizeLogic) {
-            return new Service(authorizeLogic);
-        }
+        return factory;
 
-        function Service(authorizeLogic) {
-            authorizeLogic = authorizeLogic;
-
-            this.authorize = authorize;
+        function factory(AuthorizeLogic) {      
+            if(!self.authorizeLogic && !AuthorizeLogic) {
+                throw new Error("AuthorizeLogic has not been set. If you are seeing self error, the code in app.config.auth.ts is not being run.")
+            }
+            
+            if(AuthorizeLogic) {
+                self.authorizeLogic = AuthorizeLogic;
+            }
+            
+            var serviceObject = {
+                authorize: authorize
+            }
+            return serviceObject;            
 
             function authorize(params) {
                 if(!AuthenticationManagerFactory.isAuthenticated) {
                     return false;
                 }
                 
-                return authorizeLogic(params);
+                return self.authorizeLogic(params);
             }
         }
     }
