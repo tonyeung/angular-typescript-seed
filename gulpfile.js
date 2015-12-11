@@ -34,9 +34,7 @@
   
   gulp.task('bs', browserSync);
 
-  gulp.task('ut', function(callback) {
-    runSequence('unit-tests', 'watch-tests', callback);
-  });
+  gulp.task('ut', unitTests);
 
   gulp.task('e2e', function(callback) {
     //runSequence();
@@ -45,13 +43,12 @@
   ///////////////////////////////////////////////////////
   // COMPONENT TASKS
   gulp.task('clean', clean);
+  gulp.task('build', build);
   gulp.task('process-code', processCode);
   gulp.task('process-styles', processStyles);
   gulp.task('move-fonts', moveFonts);
   gulp.task('move-static-content', moveStaticContent);
-  gulp.task('watch', watch);
-  gulp.task('watch-tests', watchTests);
-  
+  gulp.task('write-unit-tests', writeUnitTests);
   gulp.task('unit-tests', unitTests);
   gulp.task('end2end', end2end);
 
@@ -60,6 +57,7 @@
   function build (callback) {
       runSequence('clean',
                   ['process-code', 'process-styles', 'move-fonts', 'move-static-content'],
+                  'write-unit-tests',
                   callback);
   }
 
@@ -67,14 +65,15 @@
     return del(['dev/*','dist/*']);
   }
 
-  function processCode() {
+  function processCode() {                
     var javaScriptStream = gulp.src(config.jsFiles)
                 .pipe(jshint())
                 .pipe(jshint.reporter('jshint-stylish'))
                 .pipe(jshint.reporter('fail'));
 
     var typeScriptStream = gulp.src(config.tsFiles)
-                .pipe(tsc(tsc.createProject('tsconfig.json')));
+                .pipe(tsc(tsc.createProject('tsconfig.json')))
+                .pipe(gulp.dest('tests/'));
 
     var templateCacheStream = gulp.src(['src/app/**/*.html','!src/app/index.html'])
                 .pipe(templateCache());
@@ -185,21 +184,17 @@
   }
 
   ///////////////////////////////////////////////////////
-  function watch() {
-      return gulp.watch(['src/**/*', '!src/**/*.tests.js'], ['build']);
-  }
-
-  ///////////////////////////////////////////////////////
-  function watchTests() {
-    return gulp.watch(['src/**/*.tests.js'], ['ut']);
-  }
-
-  ///////////////////////////////////////////////////////
   // TEST TASK IMPLEMENTATIONS
+  function writeUnitTests() {
+    return gulp.src(config.unitTests)
+                .pipe(gulp.dest('tests/unit-tests'));
+  }
+  
   function unitTests(callback) {
     new KarmaServer({
             configFile: __dirname + '/karma.conf.js',
-            singleRun: true
+            singleRun: false,
+            autoWatch: true
         }, callback).start();
   }
   

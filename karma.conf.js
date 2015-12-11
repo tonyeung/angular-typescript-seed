@@ -22,18 +22,14 @@ module.exports = function(config) {
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'node_modules/bardjs/dist/bard.js',
       'node_modules/sinon/lib/sinon.js',
-      'src/app.core/app.core.js',
-      'src/app.auth/app.auth.js',
-      'src/app/app.js',
-      'src/**/*.js'
+      'tests/app.core.js',
+      'tests/app.auth.js',
+      'tests/app.js',
+      'tests/**/*.js'
     ],
-
-
+    
     // list of files to exclude
-    exclude: [
-      'src/app/app.html'
-    ],
-
+    exclude: [],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -65,7 +61,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
