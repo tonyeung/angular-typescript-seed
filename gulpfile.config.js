@@ -2,9 +2,9 @@
 
 module.exports = {
 	unitTests: [
-			'src/**/*.tests.js'		
+			'src/**/*.tests.ts'
 		],
-	
+
 	jsFiles: [
         'bower_components/jquery/dist/jquery.js',
         'bower_components/bootstrap/dist/js/bootstrap.js',
@@ -25,7 +25,8 @@ module.exports = {
 		'src/app/app.ts',
 		'src/app.core/**/*.ts',
 		'src/app/**/*.ts',
-		'src/**/*.ts'
+		'src/**/*.ts',
+		'!src/**/*.tests.ts'
 		],
 
 	cssFiles: [

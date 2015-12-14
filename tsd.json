@@ -9,10 +9,10 @@
       "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
     },
     "angularjs/angular.d.ts": {
-      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
+      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
     },
     "jquery/jquery.d.ts": {
-      "commit": "c3ab375b371b7b4204adee3b1209baecd81cec02"
+      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
     },
     "bootstrap/bootstrap.d.ts": {
       "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
@@ -55,6 +55,9 @@
     },
     "chai-as-promised/chai-as-promised.d.ts": {
       "commit": "5c3e47967affa3c4128a3875d1664ba206ae1b0f"
+    },
+    "angular-local-storage/angular-local-storage.d.ts": {
+      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
     }
   }
 }

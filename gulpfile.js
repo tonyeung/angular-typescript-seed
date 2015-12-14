@@ -24,14 +24,14 @@
   var reloadDev = browserSyncDev.reload;
   var browserSyncDist = require('browser-sync').create('dist');
   var reloadDist = browserSyncDist.reload;
-  
+
   var KarmaServer = require('karma').Server;
   var protractor = require("gulp-protractor").protractor;
 
   ///////////////////////////////////////////////////////
   // MAIN TASKS
   gulp.task('default', build);
-  
+
   gulp.task('bs', browserSync);
 
   gulp.task('ut', unitTests);
@@ -65,7 +65,7 @@
     return del(['dev/*','dist/*']);
   }
 
-  function processCode() {                
+  function processCode() {
     var javaScriptStream = gulp.src(config.jsFiles)
                 .pipe(jshint())
                 .pipe(jshint.reporter('jshint-stylish'))
@@ -155,20 +155,20 @@
     // reload the browser on compiled change
     gulp.watch('dev/*').on('change', delayReloadDev);
     gulp.watch('dist/*').on('change', delayReloadDist);
-    
+
     callback();
 
     function delayReloadDev(){
       if (reloadDevTO) {
         return;
       }
-      
+
       reloadDevTO = setTimeout(function() {
         clearTimeout(reloadDevTO);
         reloadDevTO = undefined;
         reloadDev();
       }, 10000);
-      
+
     }
 
     function delayReloadDist(){
@@ -187,9 +187,10 @@
   // TEST TASK IMPLEMENTATIONS
   function writeUnitTests() {
     return gulp.src(config.unitTests)
+                .pipe(tsc(tsc.createProject('tsconfig.json')))
                 .pipe(gulp.dest('tests/unit-tests'));
   }
-  
+
   function unitTests(callback) {
     new KarmaServer({
             configFile: __dirname + '/karma.conf.js',
@@ -197,7 +198,7 @@
             autoWatch: true
         }, callback).start();
   }
-  
+
   ///////////////////////////////////////////////////////
   function end2end() {
     return gulp.src(["e2e-tests/*.js"])

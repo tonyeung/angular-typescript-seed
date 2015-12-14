@@ -6,7 +6,7 @@ namespace app {
   function Authorization($rootScope, $state, $stateParams, AuthenticationManagerFactory, AuthorizationManagerFactory) {
     $rootScope.$on('$stateChangeStart', checkClaims);
 
-    function checkClaims(event, toState, toStateParams) {      
+    function checkClaims(event, toState, toStateParams) {
       $rootScope.toState = toState;
       $rootScope.toStateParams = toStateParams;
 
@@ -15,11 +15,11 @@ namespace app {
       }
 
       var authenticationManager = AuthenticationManagerFactory();
-      if (!authenticationManager.getIsAuthenticated()) {
+      if (!authenticationManager.isAuthenticated) {
         $state.go('login', {});
         return;
       }
-              
+
       // need to stick some data into the authorize method
       var authorizationManager = AuthorizationManagerFactory();
       if (!authorizationManager.authorize()) {

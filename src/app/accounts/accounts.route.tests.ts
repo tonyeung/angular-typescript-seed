@@ -1,18 +1,17 @@
 describe('account routes', function () {
   var expect = chai.expect;
   describe('state', function () {
-    var view = 'accounts/accounts.html'; 
-    beforeEach(module('app'));
-    
+    var view = 'accounts/accounts.html';
+    beforeEach(() => { bard.appModule('app') });
+
     beforeEach(function () {
-      module(function($urlRouterProvider) { $urlRouterProvider.deferIntercept(); });
+      bard.appModule(($urlRouterProvider) => { $urlRouterProvider.deferIntercept(); });
       bard.inject(this, '$rootScope', '$state', '$templateCache', 'AuthenticationManagerFactory');
-      
+
       $templateCache.put(view, '');
-      authMgr = AuthenticationManagerFactory(function () { return { id: 1 }; });
-      authMgr.authenticate();
+      authenticationManager.isAuthenticated = true;
     });
-    
+
     bard.verifyNoOutstandingHttpRequests();
 
     it('should map state accounts to url /accounts ', function () {
@@ -31,7 +30,7 @@ describe('account routes', function () {
       $rootScope.$apply();
       expect($state.is('accounts'));
     });
-    
+
     it('should have title "Accounts" ', function () {
       console.log('Accounts should have title "Accounts"');
       $state.go('accounts');

@@ -13,3 +13,4 @@
 /// <reference path="bardjs/bardjs.d.ts" />
 /// <reference path="chai-as-promised/chai-as-promised.d.ts" />
 /// <reference path="promises-a-plus/promises-a-plus.d.ts" />
+/// <reference path="angular-local-storage/angular-local-storage.d.ts" />

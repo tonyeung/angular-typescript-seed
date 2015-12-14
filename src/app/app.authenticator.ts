@@ -2,22 +2,14 @@
 namespace app {
   'use strict';
   angular.module('app')
-		.factory("Authenticator", Authenticator);
+		.value("authenticator", Authenticator);
 
-	function Authenticator() {		
-		var authenticate: app.auth.IAuthenticate = function() {			
-			var user: app.auth.IAmAUser = {
-				id: 0,
-				claims: []
-			};
-			
-			return user;
-		}
-		
-		var service = {
-			authenticate: authenticate
+	function Authenticator(authenticationManager: app.auth.IManageAuthentication, params: any): app.auth.IAmAUser {
+		var user: app.auth.IAmAUser = {
+			id: 0,
+			claims: []
 		};
-		
-		return service;		
+
+		return user;
 	}
 }
