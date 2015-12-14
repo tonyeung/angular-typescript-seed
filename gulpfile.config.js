@@ -2,6 +2,7 @@
 
 module.exports = {
 	unitTests: [
+			'typings/tsd.d.ts',
 			'src/**/*.tests.ts'
 		],
 
@@ -21,10 +22,9 @@ module.exports = {
 
 	tsFiles: [
 		'typings/tsd.d.ts',
+		'src/app.auth/app.auth.ts',
 		'src/app.core/app.core.ts',
 		'src/app/app.ts',
-		'src/app.core/**/*.ts',
-		'src/app/**/*.ts',
 		'src/**/*.ts',
 		'!src/**/*.tests.ts'
 		],

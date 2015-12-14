@@ -1,10 +1,6 @@
 namespace app.auth {
   'use strict';
 
-  angular
-    .module('app.auth')
-    .service('authenticationManager', AuthenticationManager);
-
     export interface IAmAUser {
         id: number;
         claims: number[]
@@ -13,11 +9,11 @@ namespace app.auth {
     export interface IManageAuthentication {
         user: IAmAUser;
         isAuthenticated: boolean;
-        authenticate(params: any): IAmAUser;
+        authenticate(params?: any): IAmAUser;
         signOut(): void;
     }
 
-    class AuthenticationManager implements IManageAuthentication{
+    class AuthenticationManager implements IManageAuthentication {
         public user: IAmAUser = {
             id: 0,
             claims: []
@@ -27,6 +23,7 @@ namespace app.auth {
 
             if (!this.user && localStorageService.keys().indexOf('user') > -1) {
                 this.user = <IAmAUser>localStorageService.get('user');
+                this.isAuthenticated = true;
             }
         }
 
@@ -40,4 +37,9 @@ namespace app.auth {
             this.localStorageService.remove('user');
         }
     }
+    
+  angular
+    .module('app.auth')
+    .service('authenticationManager', AuthenticationManager);
+
 }

@@ -1,18 +1,19 @@
 // authentication logic goes here
 namespace app {
   'use strict';
-  angular.module('app')
-		.factory("Authorizer", Authorizer);
-
-	function Authorizer() {		
-		var authorize = function() {	
-			return true;
-		}
-		
-		var service = {
-			authorize: authorize
-		};
-		
-		return service;		
+  
+    interface IHaveAuthorizationLogic {
+		authorize(authenticationManager: app.auth.IManageAuthentication, params?: any): boolean;
 	}
+
+    class Authorizer implements IHaveAuthorizationLogic {
+        constructor() {}
+
+        public authorize(authenticationManager: app.auth.IManageAuthentication, params?: any): boolean {
+			     return true;
+        }
+    }
+	
+  angular.module('app')
+		.service("authorizer", Authorizer);
 }

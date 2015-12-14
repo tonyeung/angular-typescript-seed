@@ -62,7 +62,7 @@
   }
 
   function clean() {
-    return del(['dev/*','dist/*']);
+    return del(['dev/*','dist/*','tests/*']);
   }
 
   function processCode() {
@@ -73,14 +73,15 @@
 
     var typeScriptStream = gulp.src(config.tsFiles)
                 .pipe(tsc(tsc.createProject('tsconfig.json')))
+                .pipe(ngAnnotate())
                 .pipe(gulp.dest('tests/'));
 
     var templateCacheStream = gulp.src(['src/app/**/*.html','!src/app/index.html'])
-                .pipe(templateCache());
+                .pipe(templateCache())
+                .pipe(ngAnnotate());
 
     return streamqueue({ objectMode: true }, javaScriptStream, typeScriptStream, templateCacheStream)
                 // output to dev
-                .pipe(ngAnnotate())
                 .pipe(sourcemaps.init())
                 .pipe(concat('app.js'))
                 .pipe(sourcemaps.write())

@@ -1,15 +1,25 @@
 // authentication logic goes here
 namespace app {
   'use strict';
-  angular.module('app')
-		.value("authenticator", Authenticator);
-
-	function Authenticator(authenticationManager: app.auth.IManageAuthentication, params: any): app.auth.IAmAUser {
-		var user: app.auth.IAmAUser = {
-			id: 0,
-			claims: []
-		};
-
-		return user;
+  
+    interface IHaveAuthenticationLogic {
+		authenticate(params?: any): app.auth.IAmAUser;
 	}
+
+    class Authenticator implements IHaveAuthenticationLogic {
+        constructor() {}
+
+        public authenticate(params?: any): app.auth.IAmAUser {
+			var user: app.auth.IAmAUser = {
+				id: 0,
+				claims: []
+			};
+	
+			return user;
+        }
+    }
+	
+  angular
+	.module('app')
+	.service("authenticator", Authenticator);
 }

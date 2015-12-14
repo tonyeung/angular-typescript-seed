@@ -1,18 +1,19 @@
-describe('Authenticator', function () {
+describe('Authenticator', () => {
   	var expect = chai.expect;
-
+	  var Authenticator: app.IAmAuthenticationLogic;
     beforeEach(function () {
       bard.appModule('app');
       bard.inject(this, "authenticator");
+	    Authenticator = authenticator;
     });
 
-    it('should not be null', (done) => {
+    it('should not be null', () => {
       console.log('Authenticator should not be null');
-        expect(authenticator).to.be.ok;
+        expect(Authenticator).to.be.ok;
     });
 
-    it('should return a user', (done) => {
+    it('should return a user', () => {
       console.log('Authenticator should return a user');
-        expect(authenticator()).to.be.ok;
+        expect(Authenticator.authenticate().id === 0).to.be.true;
     });
 });

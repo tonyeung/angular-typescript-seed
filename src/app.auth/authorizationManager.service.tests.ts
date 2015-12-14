@@ -1,19 +1,23 @@
-describe('authorization manager', function () {
+describe('authorization manager', () => {
   	var expect = chai.expect;
+    var AuthorizationManager: app.auth.IManageAuthorization;
+    var AuthenticationManager: app.auth.IManageAuthentication;
 
     beforeEach(function () {
       bard.appModule('app.auth');
       bard.inject(this, 'authorizationManager', 'authenticationManager');
+      AuthorizationManager = authorizationManager;
+      AuthenticationManager = authenticationManager;
     });
 
-    it('should not be null', (done) => {
+    it('should not be null', () => {
         console.log('should not be null');
 
-        expect(authorizationManager).to.be.ok;
+        expect(AuthorizationManager).to.be.ok;
     });
 
-    it('should throw an error if authorize logic has not been set', (done) => {
+    it('should throw an error if authorize logic has not been set', () => {
         console.log('should return true if the user is Authenticated and Authorized');
-        expect(authorizationManager.authorize()).throws;
+        expect(AuthorizationManager.authorize).to.throw(Error);
     });
 });
