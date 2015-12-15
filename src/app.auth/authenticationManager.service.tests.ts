@@ -2,7 +2,7 @@ describe('authentication manager', () => {
   	var expect = chai.expect;
     var AuthenticationManager: app.auth.IManageAuthentication;
     beforeEach(function () {
-        bard.appModule('app.auth');
+        angular.mock.module('app.auth');
         bard.inject(this, 'authenticationManager');
         AuthenticationManager = authenticationManager;
     });

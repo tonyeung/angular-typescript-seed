@@ -3,8 +3,8 @@ describe('Authorizer factory', () => {
     var Authorizer;
     var AuthenticationManager: app.auth.IManageAuthentication;
     beforeEach(function () {
-      bard.appModule('app');
-      bard.appModule('app.auth');
+      angular.mock.module('app');
+      angular.mock.module('app.auth');
       bard.inject(this, 'authorizer', 'authenticationManager');
       Authorizer = authorizer;
       AuthenticationManager = authenticationManager;
