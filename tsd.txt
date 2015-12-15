@@ -1,2 +1,2 @@
-tsd query -roa install angular -s
-tsd install bardjs -ros
+tsd query -roa install angular-ui-router angular jquery bootstrap chai assertion-error mocha toastr sinon angular-animate angular-sanitize angular-mocks bardjs angular-protractor selenium-webdriver promises-a-plus chai-as-promised angular-local-storage -s
+tsd install bardjs -ros 

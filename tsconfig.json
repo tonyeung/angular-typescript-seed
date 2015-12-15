@@ -1,7 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "ES5",
-		"emitError": false
+		"target": "ES5"
 	},
 	"exclude": [
 		"node_modules",
