@@ -36,9 +36,7 @@
 
   gulp.task('ut', unitTests);
 
-  gulp.task('e2e', function(callback) {
-    //runSequence();
-  });
+  gulp.task('e2e', end2end);
 
   ///////////////////////////////////////////////////////
   // COMPONENT TASKS
@@ -207,7 +205,14 @@
                 .pipe(protractor({
                   configFile: "protractor.config.js",
                   args: ['--baseUrl', 'http://localhost:8000']
-                }));
-                //.on('error', function(e) { throw e })
+                }))
+                .on('error', function(e) {
+                  console.log('**************************************************');
+                  console.log('');
+                  console.log('did you remember to run `webdriver-manager start`?');
+                  console.log('');
+                  console.log('**************************************************');
+                  throw e;
+                });
   }
 })();
