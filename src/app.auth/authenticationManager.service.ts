@@ -18,7 +18,7 @@ namespace app.auth {
             id: 0,
             claims: []
         };
-        public isAuthenticated: boolean;
+        public isAuthenticated: boolean = false;
         constructor(private localStorageService: angular.local.storage.ILocalStorageService) {
 
             if (!this.user && localStorageService.keys().indexOf('user') > -1) {
