@@ -14,6 +14,7 @@ describe('Authenticator', () => {
 
     it('should return a user', () => {
       console.log('Authenticator should return a user');
-        expect(Authenticator.authenticate().id === 0).to.be.true;
+        var user = { 'id': 0, 'claims': {} };
+        expect(Authenticator.authenticate(user).id === 0).to.be.true;
     });
 });

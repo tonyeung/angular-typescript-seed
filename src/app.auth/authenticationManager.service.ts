@@ -3,12 +3,12 @@ namespace app.auth {
 
     export interface IAmAUser {
         id: number;
-        claims: number[]
+        claims: {}
     }
 
     export interface IManageAuthentication {
         user: IAmAUser;
-        isAuthenticated: boolean;
+    isAuthenticated: boolean;
         authenticate(params?: any): IAmAUser;
         signOut(): void;
     }
