@@ -5,7 +5,6 @@ describe('login routes', () => {
     
     beforeEach(function () {
       angular.mock.module('app.accounts');
-      angular.mock.module(($urlRouterProvider) => { $urlRouterProvider.deferIntercept(); });
       bard.inject(this, '$rootScope', '$state', '$templateCache', 'authenticationManager');
 
       $templateCache.put(view, '');
