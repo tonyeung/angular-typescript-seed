@@ -4,8 +4,7 @@ describe('inventory routes', () => {
     var view = 'inventory/inventory.html';
     
     beforeEach(function () {
-      angular.mock.module('app')
-      angular.mock.module(($urlRouterProvider) => { $urlRouterProvider.deferIntercept(); });
+      angular.mock.module('app.inventory');
       bard.inject(this, '$rootScope', '$state', '$templateCache', 'authenticationManager');
 
       $templateCache.put(view, '');
