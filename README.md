@@ -25,3 +25,4 @@ TODOs
 * need to stick some data into the authorize method for actual authorization
 * split the modules into submodules to reduce the spinup time for tests
 	* priority on run blocks to ease route testing
+* revisit $rootScope.$apply() usage
