@@ -6,6 +6,9 @@ namespace app {
     'app.auth',
     'app.accounts',
     'app.config',
-    'LocalStorageModule'
+    'app.home',
+    'app.inventory',
+    'app.reports',
+    'app.settings'
   ]);
 }

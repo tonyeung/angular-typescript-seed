@@ -5,10 +5,9 @@ describe('inventory routes', () => {
     
     beforeEach(function () {
       angular.mock.module('app.inventory');
-      bard.inject(this, '$rootScope', '$state', '$templateCache', 'authenticationManager');
+      bard.inject(this, '$rootScope', '$state', '$templateCache');
 
       $templateCache.put(view, '');
-      authenticationManager.isAuthenticated = true;
     });
     
     bard.verifyNoOutstandingHttpRequests();

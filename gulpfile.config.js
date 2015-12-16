@@ -30,6 +30,8 @@ module.exports = {
 		'src/app/claims/app.claims.ts',
 		'src/app/home/app.home.ts',
 		'src/app/inventory/app.inventory.ts',
+		'src/app/reports/app.reports.ts',
+		'src/app/settings/app.settings.ts',
 		'src/**/*.ts',
 		'!src/**/*.tests.ts'
 		],

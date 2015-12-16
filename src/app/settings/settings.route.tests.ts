@@ -4,12 +4,10 @@ describe('settings routes', () => {
     var view = 'settings/settings.html';
     
     beforeEach(function () {
-      angular.mock.module('app')
-      angular.mock.module(($urlRouterProvider) => { $urlRouterProvider.deferIntercept(); });
-      bard.inject(this, '$rootScope', '$state', '$templateCache', 'authenticationManager');
+      angular.mock.module('app.settings')
+      bard.inject(this, '$rootScope', '$state', '$templateCache');
 
       $templateCache.put(view, '');
-      authenticationManager.isAuthenticated = true;
     });
     
     bard.verifyNoOutstandingHttpRequests();
