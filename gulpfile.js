@@ -24,6 +24,8 @@
   var reloadDev = browserSyncDev.reload;
   var browserSyncDist = require('browser-sync').create('dist');
   var reloadDist = browserSyncDist.reload;
+  var browserSyncUt = require('browser-sync').create('ut');
+  var reloadUt = browserSyncUt.reload;
 
   var KarmaServer = require('karma').Server;
   var protractor = require("gulp-protractor").protractor;
@@ -191,6 +193,18 @@
   }
 
   function unitTests(callback) {
+    browserSyncUt.init({
+      port: 9877, //karma web port + 1
+      ui: false,
+      server: {
+        baseDir: "./karma_html/report-summary-filename"
+      }
+    });
+
+    // reload the browser on compiled change
+    gulp.watch('karma_html/report-summary-filename/*')
+                .on('change', reloadUt);
+    
     new KarmaServer({
             configFile: __dirname + '/karma.conf.js',
             singleRun: false,
