@@ -2,7 +2,7 @@ namespace app {
 	'use strict';
 
 	angular
-		.module('app')
+		.module('app.home')
 		.config(ConfigureState);
 
 	function ConfigureState($stateProvider: ng.ui.IStateProvider) {
