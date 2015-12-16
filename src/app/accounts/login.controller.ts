@@ -33,6 +33,6 @@ namespace app {
 	}
 	
 	angular
-		.module('app')
+		.module('app.accounts')
 		.controller("LoginController", LoginController);
 }
