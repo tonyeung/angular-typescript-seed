@@ -22,7 +22,16 @@ describe('page heading', function () {
 	it('should be "Dashboard", when authenticated"', function () {
 		browser.waitForAngular();
 
-		var heading = element(by.css('.dashboard h1.page-heading'));
-		expect(heading.getText()).to.eventually.equal('Dashboard');
+		element(by.name('username')).sendKeys('foo');
+		element(by.name('password')).sendKeys('bar');
+		element(by.name('login')).click();
+		
+		var elem = element(by.css(".dashboard h1.page-heading"));
+		var until = protractor.ExpectedConditions;
+		browser.wait(until
+					.presenceOf(elem), 
+					5000, 
+					'Element taking too long to appear in the DOM'
+		);
 	});
 });

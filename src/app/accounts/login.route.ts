@@ -10,6 +10,8 @@ namespace app {
 			.state("login", {
 				url: "/login",
 				templateUrl: "accounts/login.html",
+				controller: "LoginController",
+				controllerAs: "vm",				
 				data: {
 					pageTitle: "login",
 					public: true

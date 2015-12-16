@@ -2,14 +2,16 @@ namespace app {
 	export interface IControlLogin {
 		username: string;
 		password: string;
+		invalid: boolean;
 		login(username: string, password: string): void; 
 	}
 	
 	class LoginController implements IControlLogin {
 		username: string;
 		password: string;
+		invalid: boolean = false;
 		
-		constructor(private authenticationManager: app.auth.IManageAuthentication){}
+		constructor(private $state: ng.ui.IStateService, private authenticationManager: app.auth.IManageAuthentication){}
 		
 		login(username: string, password: string): void {			
 			var user: app.auth.IAmAUser = {
@@ -20,7 +22,13 @@ namespace app {
 				}
 			}
 			//user the autheticationManager and userManager to actually authenticate
-			return this.authenticationManager.authenticate(user);
+			var user = this.authenticationManager.authenticate(user);
+			if (user.id === 0) {
+				this.invalid = true;
+			}
+			else {
+				this.$state.go('dashboard');
+			}
 		}
 	}
 	

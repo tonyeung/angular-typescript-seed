@@ -1,6 +1,7 @@
 # angular-typescript-seed
 
 This project is built with VSCode so there are editor specific stuff in the .vscode folder
+The code is derived from John Papa's Hot Towel project and the structure uses a lot of .net apis
 
 **web servers and watches**  
 call gulp bs to start the browser-sync process, this needs to be done in a seperate command window
@@ -26,3 +27,4 @@ TODOs
 * split the modules into submodules to reduce the spinup time for tests
 	* priority on run blocks to ease route testing
 * revisit $rootScope.$apply() usage
+* currently auth logic is injected, should look into this vs allowing the user to extend the managers
