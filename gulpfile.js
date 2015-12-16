@@ -97,9 +97,7 @@
   function processStyles() {
     var cssStream =  gulp.src(config.cssFiles);
     var lessStream = gulp.src(config.lessFiles)
-                .pipe(sourcemaps.init())
                 .pipe(less())
-                .pipe(sourcemaps.write());
 
     return streamqueue({ objectMode: true }, cssStream, lessStream)
                 // output to dev

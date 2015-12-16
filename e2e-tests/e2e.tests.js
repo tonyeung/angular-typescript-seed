@@ -15,7 +15,7 @@ describe('page heading', function () {
 	it('should be "Login", when not authenticated', function () {
 		browser.waitForAngular();
 
-		var title = element(by.css('.login h3.panel-title'));
+		var title = element(by.css('.login h1.panel-title'));
 		expect(title.getText()).to.eventually.equal('Login');
 	});
 
