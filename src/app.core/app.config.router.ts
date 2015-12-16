@@ -18,6 +18,6 @@ namespace app.core {
 							  : void {
 
 		$locationProvider.html5Mode(true);
-		$urlRouterProvider.otherwise("/");
+		$urlRouterProvider.otherwise("/404-page-not-found");
 	}
 }

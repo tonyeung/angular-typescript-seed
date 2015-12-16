@@ -23,8 +23,5 @@ TODOs
 
 * retry requests when token times out (auth)
 * global exception handler (core)
-* need to stick some data into the authorize method for actual authorization
-* split the modules into submodules to reduce the spinup time for tests
-	* priority on run blocks to ease route testing
 * revisit $rootScope.$apply() usage
 * currently auth logic is injected, should look into this vs allowing the user to extend the managers
