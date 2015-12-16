@@ -2,7 +2,7 @@ namespace app {
 	'use strict';
 
 	angular
-		.module('app')
+		.module('app.config')
 		.run(ConfigureAuthentication)
 		.run(ConfigureAuthorization);
 

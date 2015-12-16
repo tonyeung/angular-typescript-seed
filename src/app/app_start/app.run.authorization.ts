@@ -1,6 +1,6 @@
 namespace app {
   'use strict';
-  angular.module('app')
+  angular.module('app.config')
 		.run(Authorization);
     
   interface rootScopeWithUiRouter extends ng.IRootScopeService {

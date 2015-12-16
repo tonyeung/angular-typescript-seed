@@ -11,7 +11,7 @@ namespace app {
 		password: string;
 		invalid: boolean = false;
 		
-		constructor(private $state: ng.ui.IStateService, private authenticationManager: app.auth.IManageAuthentication){}
+		constructor(private $location: ng.ILocationService, private authenticationManager: app.auth.IManageAuthentication){}
 		
 		login(username: string, password: string): void {			
 			var user: app.auth.IAmAUser = {
@@ -27,7 +27,7 @@ namespace app {
 				this.invalid = true;
 			}
 			else {
-				this.$state.go('dashboard');
+				this.$location.path('/');
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 describe('Authenticator', () => {
   	var expect = chai.expect;
     beforeEach(function () {
-      angular.mock.module('app');
+      bard.appModule('app.config');
       bard.inject(this, "authenticator");
     });
 

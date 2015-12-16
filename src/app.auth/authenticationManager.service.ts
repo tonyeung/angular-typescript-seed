@@ -33,7 +33,7 @@ namespace app.auth {
             if(!this.authenticatorLogic) {
                 throw new Error("AuthenticateLogic has not been set. If you are seeing this error, the code in app.run.configure.auth is not being run.")
             }
-            console.log(this.authenticatorLogic);
+            
             this.user = this.authenticatorLogic(params);
             if (this.user.id !== 0) {
                 this.isAuthenticated = true;

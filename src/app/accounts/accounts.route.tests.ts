@@ -4,12 +4,10 @@ describe('account routes', () => {
     var view = 'accounts/accounts.html';
     
     beforeEach(function () {
-      angular.mock.module('app.accounts');
-      angular.mock.module(($urlRouterProvider) => { $urlRouterProvider.deferIntercept(); });
-      bard.inject(this, '$rootScope', '$state', '$templateCache', 'authenticationManager');
+      angular.mock.module('app.accounts'); 
+      bard.inject(this, '$rootScope', '$state', '$templateCache');
 
       $templateCache.put(view, '');
-      authenticationManager.isAuthenticated = true;
     });
 
     bard.verifyNoOutstandingHttpRequests();

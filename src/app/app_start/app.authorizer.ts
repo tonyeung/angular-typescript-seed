@@ -14,6 +14,6 @@ namespace app {
         }
     }
 	
-  angular.module('app')
+  angular.module('app.config')
 		.service("authorizer", Authorizer);
 }

@@ -26,6 +26,7 @@ module.exports = {
 		'src/app.core/app.core.ts',
 		'src/app/app.ts',
 		'src/app/accounts/app.accounts.ts',
+		'src/app/app_start/app.config.ts',
 		'src/**/*.ts',
 		'!src/**/*.tests.ts'
 		],

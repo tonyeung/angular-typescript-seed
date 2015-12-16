@@ -5,6 +5,7 @@ namespace app {
     'app.core',
     'app.auth',
     'app.accounts',
+    'app.config',
     'LocalStorageModule'
   ]);
 }
