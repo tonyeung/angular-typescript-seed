@@ -10,6 +10,6 @@ namespace app {
     'app.inventory',
     'app.reports',
     'app.settings',
-    'app.toastrLogger'
+    'app.toastrLogging'
   ]);
 }
