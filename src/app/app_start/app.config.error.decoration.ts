@@ -3,9 +3,9 @@ namespace app.core {
 
 	angular
 		.module('app.config')
-		.config(ConfigureExceptionHandling);
+		.config(ConfigureErrorDecoration);
 
-	function ConfigureExceptionHandling($provide: ng.auto.IProvideService,
+	function ConfigureErrorDecoration($provide: ng.auto.IProvideService,
 				globalErrorDecoratorProvider: app.core.IAmTheGlobalErrorDecoratorProvider) {
 		
 		var decorator = globalErrorDecoratorProvider.$get();
