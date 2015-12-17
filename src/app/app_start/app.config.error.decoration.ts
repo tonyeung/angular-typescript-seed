@@ -1,4 +1,4 @@
-namespace app.core {
+namespace app {
 	'use strict';
 
 	angular
@@ -6,7 +6,7 @@ namespace app.core {
 		.config(ConfigureErrorDecoration);
 
 	function ConfigureErrorDecoration($provide: ng.auto.IProvideService,
-				globalErrorDecoratorProvider: app.core.IAmTheGlobalErrorDecoratorProvider) {
+				globalErrorDecoratorProvider: app.globalErrorDecorator.IAmTheGlobalErrorDecoratorProvider) {
 		
 		var decorator = globalErrorDecoratorProvider.$get();
 		decorator.setBeforeErrorFunc(() => { console.log('before exception'); });

@@ -22,6 +22,8 @@ module.exports = {
 
 	tsFiles: [
 		'typings/tsd.d.ts',
+		'src/app.toastrLogging/app.toastrLogging.ts',
+		'src/app.globalErrorDecorator/app.globalErrorDecorator.ts',
 		'src/app.auth/app.auth.ts',
 		'src/app.core/app.core.ts',
 		'src/app/app.ts',

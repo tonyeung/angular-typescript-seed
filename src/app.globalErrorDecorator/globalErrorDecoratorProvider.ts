@@ -1,4 +1,4 @@
-namespace app.core {
+namespace app.globalErrorDecorator {
   'use strict';
     
     export interface IAmTheGlobalErrorDecoratorProvider extends ng.IServiceProvider {
@@ -46,6 +46,6 @@ namespace app.core {
     }
     
   angular
-    .module('app.core')
+    .module('app.globalErrorDecorator')
     .provider('globalErrorDecorator', GlobalErrorDecoratorProvider);
 }

@@ -1,4 +1,4 @@
-namespace app.core {
+namespace app {
 	'use strict';
 
 	angular

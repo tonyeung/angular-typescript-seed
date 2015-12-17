@@ -10,7 +10,6 @@ namespace app.toastrLogging {
   }
 
   export class ToastrLogger implements ILogToasts {
-    static $inject: Array<string> = ['$log', 'toastr'];
     constructor(private $log: ng.ILogService, private toastr: Toastr) { }
 
     // straight to console; bypass toastr

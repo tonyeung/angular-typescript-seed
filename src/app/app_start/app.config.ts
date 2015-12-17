@@ -3,6 +3,7 @@ namespace app {
   
   angular.module('app.config', [
     'app.core',
-    'app.auth'
+    'app.auth',
+    'app.globalErrorDecorator'
   ]);
 }
