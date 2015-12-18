@@ -12,6 +12,19 @@ namespace app {
 				templateUrl: "reports/reports.html",
 				data: {
 					pageTitle: "Reports"
+				},
+				views:{
+					'header' : {
+						templateUrl: 'layout/header.html'
+					},
+					'nav' : {
+						templateUrl: 'layout/nav.html'
+					},
+					'' : {
+						templateUrl: "reports/reports.html",
+						// controller: "LoginController",
+						// controllerAs: "vm"				
+					}
 				}
 			})
 	}

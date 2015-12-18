@@ -52,7 +52,7 @@ module.exports = {
 
 	fontFiles:[
         'bower_components/bootstrap/fonts/**/*',
-        'bower_components/fontawesome/fonts/**/*'
+        'bower_components/font-awesome/fonts/**/*'
 	],
 
 	staticContent: [

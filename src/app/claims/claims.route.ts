@@ -9,9 +9,21 @@ namespace app {
 		$stateProvider
 			.state("claims", {
 				url: "/claims",
-				templateUrl: "claims/claims.html",
 				data: {
 					pageTitle: "Claims"
+				},
+				views:{
+					'header' : {
+						templateUrl: 'layout/header.html'
+					},
+					'nav' : {
+						templateUrl: 'layout/nav.html'
+					},
+					'' : {
+						templateUrl: "claims/claims.html",
+						// controller: "LoginController",
+						// controllerAs: "vm"				
+					}
 				}
 			})
 	}

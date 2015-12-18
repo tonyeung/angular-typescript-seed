@@ -4,6 +4,7 @@ namespace app {
   angular.module('app', [
     'app.core',
     'app.auth',
+    'app.layout',
     'app.accounts',
     'app.config',
     'app.home',

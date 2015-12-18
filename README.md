@@ -18,3 +18,8 @@ the save will output the tests/dev/dist versions which should trigger their resp
 source maps are generated for both dev and dist because all the css/javascript files are concatenated 
 dev is left as is, dist is uglified
 I am assuming automated deployments know to exclude *.map files
+
+TODO:  
+* sticky header and nav
+* create or look for elevation css classes
+* create single line form control inputs that have floating labels (material)
