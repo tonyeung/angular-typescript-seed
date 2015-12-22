@@ -5,5 +5,7 @@
 	// Configure glob patterns for excluding files and folders.
 	"files.exclude": {
 		"**/*.js": { "when": "$(basename).ts"}
-	}
+	},
+    // Experimental support for fuzzy matching of file names in the file picker.
+	"filePicker.alternateFileNameMatching": false
 }
