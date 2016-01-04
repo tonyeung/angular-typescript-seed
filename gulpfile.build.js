@@ -1,11 +1,9 @@
 (function() {
-  // todo: need to refactor common code and look for a way to remove the need for the css/js configuration blocks, maybe by using wiredep
-  // start up a browser sync instance in order to verify the site still looks good
-  // fonts and static and browser sync content need to be factored out
+  // todo: 
   // replace minify with nano for css
-  // also make e2e run on the dist build
   var gulp = require('gulp');
   var config = require('./gulpfile.config.js');
+  var common = require('./gulpfile.common.js');
 
   var runSequence = require('run-sequence');
   var plumber = require('gulp-plumber');
@@ -23,6 +21,8 @@
   gulp.task('process-fonts', processFonts);
   gulp.task('process-static-content', processStaticContent);
   gulp.task('write-dist-index', writeDistIndex);
+  gulp.task('start-dummy-dist-server', startDummyDistServer);
+  gulp.task('start-e2e-dist', startE2eDist);
   
   ///////////////////////////////////////////////////////
   // TASK IMPLEMENTATIONS
@@ -30,6 +30,8 @@
       runSequence('clean-dist',
                   ['process-code', 'process-styles', 'process-fonts', 'process-static-content'],
                   'write-dist-index',
+                  'start-dummy-dist-server',
+                  'start-e2e-dist',
                   callback);
   }
 
@@ -41,6 +43,7 @@
 
   ///////////////////////////////////////////////////////
   function processCode() {
+    var wireDep = require('wiredep');
     var jshint = require('gulp-jshint');
     var tsc = require('gulp-typescript');
     var ngAnnotate = require('gulp-ng-annotate');
@@ -50,14 +53,12 @@
     var sourcemaps = require('gulp-sourcemaps');
     var uglify = require('gulp-uglify');
     
-    var javaScriptStream = gulp.src(config.jsFiles)
+    var javaScriptStream = gulp.src(wireDep(config.getWireDepOptions()).js)
                 .pipe(jshint())
                 .pipe(jshint.reporter('jshint-stylish'))
                 .pipe(jshint.reporter('fail'));
 
-    var typeScriptStream = gulp.src(config.tsFiles)
-                .pipe(tsc(tsc.createProject('tsconfig.json')))
-                .pipe(ngAnnotate())
+    var typeScriptStream = common.runTsc(gulp, config.tsFiles, plumber, tsc, ngAnnotate);
 
     var templateCacheStream = gulp.src(['src/app/**/*.html','!src/app/index.html'])
                 .pipe(templateCache())
@@ -66,13 +67,14 @@
     return streamqueue({ objectMode: true }, javaScriptStream, typeScriptStream, templateCacheStream)    
                 .pipe(concat('app.js'))
                 .pipe(sourcemaps.init())
-                .pipe(uglify())
+                .pipe(uglify({ mangle: false }))
                 .pipe(sourcemaps.write('.'))
                 .pipe(gulp.dest('dist/js/'));
   }
 
   ///////////////////////////////////////////////////////
   function processStyles() {
+    var wireDep = require('wiredep');
     var less = require('gulp-less');
     var autoPrefixer = require('gulp-autoprefixer');
     var streamqueue = require('streamqueue');
@@ -80,10 +82,8 @@
     var sourcemaps = require('gulp-sourcemaps');
     var minifyCss = require('gulp-minify-css');
     
-    var cssStream =  gulp.src(config.cssFiles);
-    var lessStream = gulp.src(config.lessFiles)
-                .pipe(less())
-                .pipe(autoPrefixer( { browsers: ['last 2 version', '> 5%'] }));
+    var cssStream =  gulp.src(wireDep(config.getWireDepOptions()).css);
+    var lessStream = common.lessToCssStream(gulp, config.lessFiles, plumber, less, autoPrefixer)    
 
     return streamqueue({ objectMode: true }, cssStream, lessStream)
                 .pipe(concat('app.css'))
@@ -95,16 +95,12 @@
 
   ///////////////////////////////////////////////////////
   function processFonts() {
-    return gulp.src(config.fontFiles)
-                .pipe(plumber())
-                .pipe(gulp.dest('dist/fonts/'));
+    return common.moveFonts(gulp, config.fontFiles, plumber, 'dist/fonts/');
   }
 
   ///////////////////////////////////////////////////////
   function processStaticContent() {
-    return gulp.src('src/assets/**/*')
-                .pipe(plumber())
-                .pipe(gulp.dest('dist/'));
+    return common.moveStaticContent(gulp, 'src/assets/**/*', plumber, 'dist/');
   }
   
   ///////////////////////////////////////////////////////
@@ -114,5 +110,15 @@
                 .pipe(inject(gulp.src('dist/js/app.js', { read: false }), { ignorePath: 'dist/' }))
                 .pipe(inject(gulp.src('dist/css/app.css', { read: false }), { ignorePath: 'dist/' }))
                 .pipe(gulp.dest('dist/'));
+  }
+  
+  ///////////////////////////////////////////////////////
+  function startDummyDistServer(callback) {
+    common.startBrowserSync('dist', 8001, './dist', callback);
+  }
+  
+  ///////////////////////////////////////////////////////
+  function startE2eDist(callback) {
+    common.startE2e(gulp, plumber, 'http://localhost:8001', callback);
   }
 })();

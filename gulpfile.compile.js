@@ -2,6 +2,7 @@
 
   var gulp = require('gulp');
   var config = require('./gulpfile.config.js');
+  var common = require('./gulpfile.common.js');
   var runSequence = require('run-sequence');
   var plumber = require('gulp-plumber');
   var wireDep = require('wiredep').stream;
@@ -78,37 +79,6 @@
   function watchE2e() {
       return gulp.watch('e2e-tests/*', ['start-e2e']);
   }
-  
-
-  ///////////////////////////////////////////////////////
-  function waitForLastChange(callback) {
-    var moment = require('moment');
-    var browserSync = require('browser-sync');
-    var dev = browserSync.get('dev');
-    var ut = browserSync.get('ut');
-    
-    if (!lastEvent) {
-        lastEvent = moment.utc();
-    }
-    
-    if (wait) {
-        return;
-    }
-    else {
-        wait = setInterval(function() {
-            var now = moment.utc();
-            if (now.diff(lastEvent, 'milliseconds') > 1500) {
-                clearInterval(wait);
-                wait = undefined;
-                lastEvent = moment.utc();
-                dev.reload();
-                ut.reload();
-                callback();
-            }
-            
-        }, 100);
-    }
-  }
 
 
   ///////////////////////////////////////////////////////
@@ -123,10 +93,7 @@
     var tsc = require('gulp-typescript');
     var ngAnnotate = require('gulp-ng-annotate');
     
-    return gulp.src(config.tsFiles)
-                .pipe(plumber())
-                .pipe(tsc(tsc.createProject('tsconfig.json')))
-                .pipe(ngAnnotate())
+    return common.runTsc(gulp, config.tsFiles, plumber, tsc, ngAnnotate)
                 .pipe(gulp.dest('dev/'))
                 .pipe(gulp.dest('unit-tests/'));
   }
@@ -138,9 +105,7 @@
     var less = require('gulp-less');
     var autoPrefixer = require('gulp-autoprefixer');
     
-    return gulp.src(config.lessFiles)
-                .pipe(less())
-                .pipe(autoPrefixer( { browsers: ['last 2 version', '> 5%'] }))
+    return common.lessToCssStream(gulp, config.lessFiles, plumber, less, autoPrefixer)
                 .pipe(sourcemaps.init())
                 .pipe(sourcemaps.write())
                 .pipe(gulp.dest('dev/css/'));
@@ -149,17 +114,13 @@
 
   ///////////////////////////////////////////////////////
   function moveFonts() {
-    return gulp.src(config.fontFiles)
-                .pipe(plumber())
-                .pipe(gulp.dest('dev/fonts/'))
+    return common.moveFonts(gulp, config.fontFiles, plumber, 'dev/fonts/');
   }
   
 
   ///////////////////////////////////////////////////////
   function moveStaticContent() {
-    return gulp.src('src/assets/**/*')
-                .pipe(plumber())
-                .pipe(gulp.dest('dev/'));
+    return common.moveStaticContent(gulp, 'src/assets/**/*', plumber, 'dev/');
   }
   
 
@@ -206,62 +167,48 @@
 
   ///////////////////////////////////////////////////////
   function startSyncingDev(callback) {
-    var historyApiFallback = require('connect-history-api-fallback');
-    var browserSync = require('browser-sync').create('dev');
-    
-    browserSync.init({
-      port: 8000,
-      ui: false,
-      server: {
-        baseDir: './dev',
-        routes: {
-          '/bower_components': './bower_components'  
-        },
-        middleware: [historyApiFallback()]
-      }
-    }, callback);
+    common.startBrowserSync('dev', 8000, './dev', callback);
   }
   
 
   ///////////////////////////////////////////////////////
-  function startUnitTests() {
-    var historyApiFallback = require('connect-history-api-fallback');
-    var browserSync = require('browser-sync').create('ut');
-    
-    browserSync.init({
-      port: 9000,
-      ui: false,
-      server: {
-        baseDir: './unit-tests',
-        routes: {
-          '/bower_components': './bower_components',
-          '/node_modules': './node_modules'  
-        },
-        middleware: [historyApiFallback()]
-      },
-      startPath: 'mocha-test-runner.html'
-    });
+  function startUnitTests(callback) {
+    common.startBrowserSync('ut', 9000, './unit-tests', callback, 'mocha-test-runner.html');
   }
-  
 
   ///////////////////////////////////////////////////////
   function startEnd2End(callback) {
-    var protractor = require("gulp-protractor").protractor;
+    common.startE2e(gulp, plumber, 'http://localhost:8000', callback);
+  }
+  
+
+  ///////////////////////////////////////////////////////
+  function waitForLastChange(callback) {
+    var moment = require('moment');
+    var browserSync = require('browser-sync');
+    var dev = browserSync.get('dev');
+    var ut = browserSync.get('ut');
     
-    gulp.src(["e2e-tests/*.js"])
-                .pipe(plumber())
-                .pipe(protractor({
-                  configFile: "protractor.config.js",
-                  args: ['--baseUrl', 'http://localhost:8000']
-                }))
-                .on('error', function(e) {
-                  console.log('**************************************************');
-                  console.log('');
-                  console.log('did you remember to run `webdriver-manager start`?');
-                  console.log('');
-                  console.log('**************************************************');
-                  //throw e;
-                })
-                .on('end', callback);
+    if (!lastEvent) {
+        lastEvent = moment.utc();
+    }
+    
+    if (wait) {
+        return;
+    }
+    else {
+        wait = setInterval(function() {
+            var now = moment.utc();
+            if (now.diff(lastEvent, 'milliseconds') > 1500) {
+                clearInterval(wait);
+                wait = undefined;
+                lastEvent = moment.utc();
+                dev.reload();
+                ut.reload();
+                callback();
+            }
+            
+        }, 100);
+    }
   }
 })();

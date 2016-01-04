@@ -46,7 +46,7 @@
     },
     "font-awesome": {
       "main": [
-        "css/bootstrap.css",
+        "css/font-awesome.css",
         "less/font-awesome.less",
         "scss/font-awesome.scss"
       ]

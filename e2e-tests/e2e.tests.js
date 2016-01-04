@@ -7,7 +7,7 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;
 
 beforeEach(function () {
-	browser.get('http://localhost:8000/');
+	browser.get('/');
 });
 
 describe('page heading', function () {
