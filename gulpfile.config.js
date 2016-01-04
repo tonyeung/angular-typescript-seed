@@ -49,11 +49,6 @@ module.exports = {
         'bower_components/bootstrap/fonts/**/*',
         'bower_components/font-awesome/fonts/**/*'
 	],
-
-	staticContent: [
-		'src/assets/**/*',
-		'src/app/index.html'
-	],
     
     mochaTestingLibs: [
         'node_modules/chai/chai.js',

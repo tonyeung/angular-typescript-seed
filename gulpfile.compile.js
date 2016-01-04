@@ -6,20 +6,20 @@
   var plumber = require('gulp-plumber');
   var wireDep = require('wiredep').stream;
   var inject = require('gulp-inject');
-  var moment = require('moment');
-  var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
 
   var wait;
   var lastEvent;
 
   ///////////////////////////////////////////////////////
-  // MAIN TASKS
-  // default task kicks off dev cycle (always on)
+  // MAIN TASK
+  // default task includes watches and tests
   gulp.task('default', defaultTask);
+  
+  // compile task is for one off builds (run once)
+  gulp.task('compile', compile);
 
   ///////////////////////////////////////////////////////
   // COMPONENT TASKS
-  gulp.task('compile', compile);
   gulp.task('watch-src', watchSrc);
   gulp.task('watch-dev', watchDev);
   gulp.task('watch-e2e', watchE2e);
@@ -39,7 +39,7 @@
   gulp.task('restart-e2e', ['wait-for-last-change'], startEnd2End);
 
   ///////////////////////////////////////////////////////
-  // COMPILE TASK IMPLEMENTATIONS
+  // TASK IMPLEMENTATIONS
   
   function defaultTask(callback) {
       runSequence('compile', 
@@ -49,6 +49,8 @@
                 callback);
   }
   
+
+  ///////////////////////////////////////////////////////
   function compile(callback) {  
     runSequence('clean',
                 ['run-tsc', 'transpile-less', 'move-fonts', 'move-static-content', 'create-template-cache', 'copy-tests'],
@@ -56,6 +58,8 @@
                 callback);
   }
   
+
+  ///////////////////////////////////////////////////////
   function watchSrc() {
     return gulp.watch('src/**/*',  ['compile'])
                 .on('change', function(event) {
@@ -63,15 +67,22 @@
                 });
   }
   
+
+  ///////////////////////////////////////////////////////
   function watchDev() {
-    return gulp.watch('dev/*', ['restart-e2e']);
+    return gulp.watch('dev/*', ['restart-e2e']); //depends on wait
   }
   
+
+  ///////////////////////////////////////////////////////
   function watchE2e() {
-      return gulp.watch('e2e-tests/*', ['start-automated-e2e']);
+      return gulp.watch('e2e-tests/*', ['start-e2e']);
   }
   
+
+  ///////////////////////////////////////////////////////
   function waitForLastChange(callback) {
+    var moment = require('moment');
     var browserSync = require('browser-sync');
     var dev = browserSync.get('dev');
     var ut = browserSync.get('ut');
@@ -99,11 +110,15 @@
     }
   }
 
+
+  ///////////////////////////////////////////////////////
   function clean() {
     var del = require('del');
     return del(['dev/*', 'unit-tests/*', '!unit-tests/mocha-test-runner.html']);
   }
   
+
+  ///////////////////////////////////////////////////////
   function runTsc() {
     var tsc = require('gulp-typescript');
     var ngAnnotate = require('gulp-ng-annotate');
@@ -116,6 +131,8 @@
                 .pipe(gulp.dest('unit-tests/'));
   }
   
+
+  ///////////////////////////////////////////////////////
   function transpileLess() {
     var sourcemaps = require('gulp-sourcemaps');
     var less = require('gulp-less');
@@ -129,18 +146,24 @@
                 .pipe(gulp.dest('dev/css/'));
   }
   
+
+  ///////////////////////////////////////////////////////
   function moveFonts() {
     return gulp.src(config.fontFiles)
                 .pipe(plumber())
                 .pipe(gulp.dest('dev/fonts/'))
   }
   
+
+  ///////////////////////////////////////////////////////
   function moveStaticContent() {
-    return gulp.src(config.staticContent)
+    return gulp.src('src/assets/**/*')
                 .pipe(plumber())
                 .pipe(gulp.dest('dev/'));
   }
   
+
+  ///////////////////////////////////////////////////////
   function createTemplateCache() {
     var templateCache = require('gulp-angular-templatecache');
                 
@@ -150,30 +173,38 @@
                 .pipe(gulp.dest('unit-tests/app.core/'));
   }
   
+
+  ///////////////////////////////////////////////////////
   function copyTests() {
     gulp.src('src/**/*.tests.js')
                 .pipe(plumber())
                 .pipe(gulp.dest('unit-tests/'));
   }
   
+
+  ///////////////////////////////////////////////////////
   function writeDevIndex() {
-    return gulp.src('dev/index.html')
+    return gulp.src('src/app/index.html')
                 .pipe(wireDep(config.getWireDepOptions))
-                .pipe(inject(gulp.src('dev/**/*.js', { read: false }), { relative: true }))
-                .pipe(inject(gulp.src('dev/css/**/*.css', { read: false }), { relative: true }))
+                .pipe(inject(gulp.src('dev/**/*.js', { read: false }), { ignorePath: 'dev/' }))
+                .pipe(inject(gulp.src('dev/css/**/*.css', { read: false }), { ignorePath: 'dev/' }))
                 .pipe(gulp.dest('dev/'));
   }
 
+
+  ///////////////////////////////////////////////////////
   function writeUnitTestsIndex(callback) {
     var options = config.getWireDepOptions();
     options.devDependencies = true;
-    return gulp.src('unit-tests/mocha-test-runner.html')
+    return gulp.src('src/app/mocha-test-runner.html')
                 .pipe(wireDep(options))
                 .pipe(inject(gulp.src(config.mochaTestingLibs, { read: false }), { starttag: '<!-- inject:mochaTestingLibs:{{ext}} -->' }))
-                .pipe(inject(gulp.src('unit-tests/**/*.js', { read: false }), { relative: true }))
+                .pipe(inject(gulp.src('unit-tests/**/*.js', { read: false }), { ignorePath: 'unit-tests/' }))
                 .pipe(gulp.dest('unit-tests/'));
   }
   
+
+  ///////////////////////////////////////////////////////
   function startSyncingDev(callback) {
     var historyApiFallback = require('connect-history-api-fallback');
     var browserSync = require('browser-sync').create('dev');
@@ -191,6 +222,8 @@
     }, callback);
   }
   
+
+  ///////////////////////////////////////////////////////
   function startUnitTests() {
     var historyApiFallback = require('connect-history-api-fallback');
     var browserSync = require('browser-sync').create('ut');
@@ -210,6 +243,8 @@
     });
   }
   
+
+  ///////////////////////////////////////////////////////
   function startEnd2End(callback) {
     var protractor = require("gulp-protractor").protractor;
     
