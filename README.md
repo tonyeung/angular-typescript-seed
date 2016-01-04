@@ -19,6 +19,12 @@ source maps are generated for both dev and dist because all the css/javascript f
 dev is left as is, dist is uglified
 I am assuming automated deployments know to exclude *.map files
 
+**e2e tests**  
+install protractor globally `npm install protractor -g`  
+then in `.\node_modules\protractor\bin`  
+run `node webdriver-manager update`
+if there are problems its probably because the jar version has been updated
+
 TODO:  
 * sticky header and nav
 * create or look for elevation css classes

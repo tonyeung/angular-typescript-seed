@@ -28,6 +28,28 @@
     "toastr": "~2.1.2"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.8"
+    "angular-mocks": "~1.4.8",
+    "bardjs": "~0.1.8"
+  },
+  "overrides": {
+    "angular": {
+      "dependencies": {
+        "jquery": "*"
+      }
+    },
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "less/bootstrap.less"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/bootstrap.css",
+        "less/font-awesome.less",
+        "scss/font-awesome.scss"
+      ]
+    }
   }
 }

@@ -1,11 +1,7 @@
 'use strict';
 
 module.exports = {
-	unitTests: [
-			'typings/tsd.d.ts',
-			'src/**/*.tests.ts'
-		],
-
+    // get rid of this after refactor
 	jsFiles: [
         'bower_components/jquery/dist/jquery.js',
         'bower_components/bootstrap/dist/js/bootstrap.js',
@@ -34,10 +30,9 @@ module.exports = {
 		'src/app/inventory/app.inventory.ts',
 		'src/app/reports/app.reports.ts',
 		'src/app/settings/app.settings.ts',
-		'src/**/*.ts',
-		'!src/**/*.tests.ts'
+		'src/**/*.ts'
 		],
-
+    // this one too
 	cssFiles: [
         'bower_components/bootstrap/dist/css/bootstrap.css',
         'bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.css',
@@ -58,5 +53,20 @@ module.exports = {
 	staticContent: [
 		'src/assets/**/*',
 		'src/app/index.html'
-	]
+	],
+    
+    mochaTestingLibs: [
+        'node_modules/chai/chai.js',
+        'node_modules/chai-as-promised/lib/chai-as-promised.js',
+        'node_modules/mocha/mocha.js',
+        'node_modules/sinon/lib/sinon.js',
+        'node_modules/sinon-chai/lib/sinon-chai.js'
+    ],
+    
+    getWireDepOptions: function() {
+        return {
+            json: 'bower.json', 
+            directory: 'bower_components'
+        }
+    }
 }

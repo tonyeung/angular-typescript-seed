@@ -19,7 +19,7 @@ describe('claim routes', () => {
 
     it('should map /claims route to claims View template', () => {
       console.log("claims should map /claims route to claims View template");
-      expect($state.get('claims').templateUrl).to.equal(view);
+      expect($state.get('claims').views[''].templateUrl).to.equal(view);
     });
 
     it('should work with $state.go', () => {

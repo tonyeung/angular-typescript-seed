@@ -1,13 +1,11 @@
 describe('Login Controller', () => {
   var expect = chai.expect;
-  var controller: app.IControlLogin;
-  var AuthenticationManager: app.auth.IManageAuthentication;
+  var controller;
     
   beforeEach(function() {
     angular.mock.module('app.accounts');
     bard.inject(this, '$controller', '$rootScope', 'authenticationManager');
     controller = $controller('LoginController', { authenticationManager: authenticationManager });
-    AuthenticationManager = authenticationManager;
     $rootScope.$apply();
   });
 
@@ -20,7 +18,7 @@ describe('Login Controller', () => {
   describe('when authentication fails', () => {    
     beforeEach(function() {
       
-      AuthenticationManager.authenticatorLogic = (() => {
+      authenticationManager.authenticatorLogic = (() => {
         return { id: 0, claims: []};
       });
     });
@@ -32,7 +30,7 @@ describe('Login Controller', () => {
   
       controller.login('username', 'password');
   
-      expect(AuthenticationManager.isAuthenticated).to.be.false;
+      expect(authenticationManager.isAuthenticated).to.be.false;
     });
     
     it('should set invalid to true', () => {
@@ -47,7 +45,7 @@ describe('Login Controller', () => {
   describe('when authenticating', () => {    
     beforeEach(function() {
       
-      AuthenticationManager.authenticatorLogic = (() => {
+      authenticationManager.authenticatorLogic = (() => {
         return { id: 1, claims: []};
       });
       
@@ -58,7 +56,7 @@ describe('Login Controller', () => {
   
       controller.login('username', 'password');
   
-      expect(AuthenticationManager.isAuthenticated).to.be.true;
+      expect(authenticationManager.isAuthenticated).to.be.true;
     });
   });
 });
