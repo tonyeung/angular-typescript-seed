@@ -17,14 +17,6 @@ module.exports = {
 		'src/app/settings/app.settings.ts',
 		'src/**/*.ts'
 		],
-    // this one too
-	cssFiles: [
-        //'bower_components/bootstrap/dist/css/bootstrap.css',
-        'bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.css',
-        //'bower_components/bootstrap-material-design/dist/css/ripples.css',
-        //'bower_components/toastr/toastr.css',
-		//'bower_components/font-awesome/css/font-awesome.css'
-	],
 
 	lessFiles: [
 		'src/app/**/*.less'
