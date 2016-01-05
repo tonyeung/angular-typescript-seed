@@ -15,7 +15,7 @@ namespace app {
 					pageTitle: "Reports"
 				},
 				views:{
-					'' : {
+					'@' : {
 						templateUrl: "reports/reports.html",
 						// controller: "LoginController",
 						// controllerAs: "vm"				

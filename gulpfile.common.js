@@ -38,7 +38,8 @@ module.exports = {
         },
         middleware: [historyApiFallback()]
       },
-      reloadDelay: 1000
+      reloadDelay: 1000,
+      notify: false
     }
     
     if (startPath) {

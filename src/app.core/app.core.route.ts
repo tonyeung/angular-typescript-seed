@@ -2,7 +2,7 @@ namespace app {
 	'use strict';
 
 	angular
-		.module('app.layout')
+		.module('app.core')
 		.config(ConfigureState);
 
 	function ConfigureState($stateProvider: ng.ui.IStateProvider) {

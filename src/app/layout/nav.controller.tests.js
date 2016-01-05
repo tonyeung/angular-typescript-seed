@@ -3,10 +3,11 @@ describe('Nav Controller', () => {
   var controller;
     
   beforeEach(function() {
-    angular.mock.module('app.layout');
-    bard.inject(this, '$controller', '$rootScope', '$state');
+    angular.mock.module('app.layout', 'app.home');
+    bard.inject(this, '$controller', '$rootScope', '$mdSidenav', '$state');
+    sinon.spy($mdSidenav('left'), 'close');
     sinon.spy($state, 'go');
-    controller = $controller('NavController', { $state: $state });
+    controller = $controller('NavController', { $mdSidenav: $mdSidenav, $state: $state });
     $rootScope.$apply();
   });
 
@@ -21,7 +22,12 @@ describe('Nav Controller', () => {
   });
   
   it('should call $state.go when called', function() {
-    controller.openLeftMenu();    
-    expect($state().go.calledOnce);
+    controller.route('dashboard');
+    expect($state.go.calledOnce);
+  });
+  
+  it('should call $mdSidenav.close when called', function() {
+    controller.route('dashboard');
+    expect($mdSidenav('left').close.calledOnce);
   });
 });
