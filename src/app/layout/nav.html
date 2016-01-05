@@ -1,11 +1,55 @@
-  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
-                md-component-id="left">
+<md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 nav" md-component-id="left" layout="column">
 
-    <md-toolbar class="md-whiteframe-z1">
-      <h1>Users</h1>
-    </md-toolbar>
+  <md-toolbar layout-padding>
+    <div class="md-toolbar-tools">
+      <div>
+        <md-button class="md-icon-button">
+          <md-icon md-font-library="material-icons" class="md-36">menu</md-icon>
+        </md-button>
+      </div>
+      <div class="brand">
+        <a href="/dashboard">ACME Inc</a>
+      </div>
+      <span flex></span>
+    </div>
+  </md-toolbar>
 
+  <md-list layout="column" layout-align="none start">
+    <md-item layout-fill>
+      <md-item-content layout-fill>
+        <md-button layout-fill layout-padding ng-class="{selected: $state.current.name === 'dashboard'}" ng-disabled="$state.current.name === 'dashboard'" ng-click="vm.route('dashboard')">
+          Dashboard
+        </md-button>
+      </md-item-content>
+    </md-item>
+    <md-item layout-fill>
+      <md-item-content layout-fill>
+        <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='accounts'}" ng-disabled="$state.current.name === 'accounts'" ng-click="vm.route('accounts')">
+          Accounts
+        </md-button>
+      </md-item-content>
+    </md-item>
+    <md-item layout-fill>
+      <md-item-content layout-fill>
+        <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='inventory'}" ng-disabled="$state.current.name === 'inventory'" ng-click="vm.route('inventory')">
+          Inventory
+        </md-button>
+      </md-item-content>
+    </md-item>
+    <md-item layout-fill>
+      <md-item-content layout-fill>
+        <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='reports'}" ng-disabled="$state.current.name === 'reports'" ng-click="vm.route('reports')">
+          Reports
+        </md-button>
+      </md-item-content>
+    </md-item>
+    <md-item layout-fill>
+      <md-item-content layout-fill>
+        <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='settings'}" ng-disabled="$state.current.name === 'settings'" ng-click="vm.route('settings')">
+          Settings
+        </md-button>
+      </md-item-content>
+    </md-item>
+  </md-list>
 
-  </md-sidenav>
-  
-  
+</md-sidenav>

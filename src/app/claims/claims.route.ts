@@ -8,17 +8,12 @@ namespace app {
 	function ConfigureState($stateProvider: ng.ui.IStateProvider) {
 		$stateProvider
 			.state("claims", {
+        parent: 'root',
 				url: "/claims",
 				data: {
 					pageTitle: "Claims"
 				},
 				views:{
-					'header' : {
-						templateUrl: 'layout/header.html'
-					},
-					'nav' : {
-						templateUrl: 'layout/nav.html'
-					},
 					'' : {
 						templateUrl: "claims/claims.html",
 						// controller: "LoginController",
