@@ -27,7 +27,7 @@ namespace app {
 				this.invalid = true;
 			}
 			else {
-				this.$location.path('/');
+				this.$location.path('/dashboard');
 			}
 		}
 	}

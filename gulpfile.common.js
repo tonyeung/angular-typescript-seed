@@ -37,7 +37,8 @@ module.exports = {
           '/node_modules': './node_modules'  
         },
         middleware: [historyApiFallback()]
-      }
+      },
+      reloadDelay: 1000
     }
     
     if (startPath) {

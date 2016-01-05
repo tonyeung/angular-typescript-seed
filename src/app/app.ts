@@ -11,6 +11,8 @@ namespace app {
     'app.inventory',
     'app.reports',
     'app.settings',
-    'app.toastrLogging'
+    'app.toastrLogging',
+    'ngMaterial',
+    'ngMessages'
   ]);
 }

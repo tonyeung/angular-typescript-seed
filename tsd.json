@@ -6,58 +6,61 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "angular-local-storage/angular-local-storage.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "angularjs/angular-animate.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "angular-ui-router/angular-ui-router.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "angularjs/angular.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "bardjs/bardjs.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "assertion-error/assertion-error.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "angular-protractor/angular-protractor.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "angularjs/angular-sanitize.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "selenium-webdriver/selenium-webdriver.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "bootstrap/bootstrap.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "chai/chai.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "mocha/mocha.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "jquery/jquery.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "promises-a-plus/promises-a-plus.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "toastr/toastr.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "chai-as-promised/chai-as-promised.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "sinon/sinon.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     },
     "angularjs/angular-mocks.d.ts": {
-      "commit": "56df28f76adb7c11c019282699afdc6e9b0a96f6"
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
+    },
+    "angular-material/angular-material.d.ts": {
+      "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
     }
   }
 }

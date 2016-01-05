@@ -14,3 +14,4 @@
 /// <reference path="chai-as-promised/chai-as-promised.d.ts" />
 /// <reference path="promises-a-plus/promises-a-plus.d.ts" />
 /// <reference path="angular-local-storage/angular-local-storage.d.ts" />
+/// <reference path="angular-material/angular-material.d.ts" />

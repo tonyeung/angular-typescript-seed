@@ -1,9 +1,32 @@
-<header ng-class="$state.current.name === 'login' ? 'header-login' : 'header'">
-	<div class="container-fluid">
-		<div class="col-md-10 col-md-offset-1" ng-class="$state.current.name === 'login' ? 'header-brand-login' : 'header-brand'">			
-			<a href="/">
-				<span>ACME Inc</span>
-			</a>
-		</div>
-	</div>	
+<div ng-switch="$state.current.name" class="header">
+<header layout="row" layout-padding ng-switch-when="login" class="isLogin">
+    <div flex layout="row" layout-align="center center">
+        <a href="/dashboard">
+            ACME Inc
+        </a>
+    </div>
 </header>
+<header layout="row" ng-switch-default layout-align="start center">
+     <md-toolbar layout-padding>
+      <div class="md-toolbar-tools">
+        <div>
+          <md-button class="md-icon-button" ng-click="vm.openLeftMenu()">
+            <md-icon md-font-library="material-icons" class="md-36">menu</md-icon>
+          </md-button>
+        </div>
+        <div layout="column">
+          <div class="brand">
+              <a href="/dashboard">ACME Inc</a>
+          </div>
+          <div class="breadcrumb">
+              <span ng-bind="$state.current.data.pageTitle">page title</span>
+          </div>
+        </div>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="settings">
+            <md-icon md-font-library="material-icons" class="md-36">more_vert</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+</header>
+</div>

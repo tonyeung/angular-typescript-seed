@@ -8,13 +8,15 @@ namespace app {
 	function ConfigureState($stateProvider: ng.ui.IStateProvider) {
 		$stateProvider
 			.state("dashboard", {
-				url: "/",
+				url: "/dashboard",
 				data: {
 					pageTitle: "Dashboard"
 				},
 				views:{
 					'header' : {
-						templateUrl: 'layout/header.html'
+						templateUrl: 'layout/header.html',
+                        controller: 'HeaderController',
+                        controllerAs: "vm"
 					},
 					'nav' : {
 						templateUrl: 'layout/nav.html'

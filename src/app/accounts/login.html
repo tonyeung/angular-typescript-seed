@@ -1,31 +1,26 @@
 <div class="login">
-	<form class='container'>
-		
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				
-				<div class="panel panel-default">
-					<div class="clearfix">
-						<div class="panel-title col-md-12">
-							<h1>Login</h1>
-						</div>
-					</div>
-					<div class="panel-body">
-						<div class="col-md-6">
-							<input type="text" class='form-control' name="username" ng-model="vm.username" placeholder="john@gmail.com" />
-						</div>
-						<div class="col-md-6">
-							<input type="text" class='form-control' name="password" ng-model="vm.password" placeholder="secret" />
-						</div>
-						<div ng-if='vm.invalid'>Username or Password is invalid</div>
-					</div>
-					<div class="clearfix">
-						<button class="btn btn-success pull-right" name="login" ng-click="vm.login(vm.username, vm.password)">Submit</button>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		
-	</form>
+<div layout="row" layout-align="center center" layout-fill>
+  <md-whiteframe class="md-whiteframe-6dp" layout-padding flex="66" flex-gt-sm="33">
+  <md-content layout-padding>
+      <form name="userForm">
+        <md-input-container class="md-block">
+          <label>email</label>
+            <input type="text" name="username" ng-model="vm.username" />
+        </md-input-container>
+
+        <md-input-container md-no-float="" class="md-block">
+          <label>password</label>
+          <input type="text" name="password" ng-model="vm.password" />
+          <div ng-messages="login.password.$error">
+            <div ng-message="required">Password is required!</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container layout="row" layout-align="end center">
+          <md-button class="md-raised md-primary" ng-click="vm.login(vm.username, vm.password)">Login</md-button>
+        </md-input-container>
+      </form>
+  </md-content>
+  </md-whiteframe>
+</div>
 </div>
