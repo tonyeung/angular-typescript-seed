@@ -15,8 +15,8 @@ describe('page heading', function () {
 	it('should be "Login", when not authenticated', function () {
 		browser.waitForAngular();
 
-		var title = element(by.css('.login div.panel-title h1'));
-		expect(title.getText()).to.eventually.equal('Login');
+		var form = element(by.css('.login form[name="loginForm"]'));
+		expect(form).to.be.ok;
 	});
 
 	it('should be "Dashboard", when authenticated"', function () {
@@ -24,9 +24,9 @@ describe('page heading', function () {
 
 		element(by.name('username')).sendKeys('foo');
 		element(by.name('password')).sendKeys('bar');
-		element(by.name('login')).click();
+		element(by.name('loginButton')).click();
 		
-		var elem = element(by.css(".dashboard h1.page-heading"));
+		var elem = element(by.css(".dashboard"));
 		var until = protractor.ExpectedConditions;
 		browser.wait(until
 					.presenceOf(elem), 
