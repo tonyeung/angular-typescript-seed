@@ -19,7 +19,7 @@ describe('dashboard routes', () => {
 
     it('should map /dashboard route to dashboard View template', () => {
       console.log("dashboard should map /dashboard route to dashboard View template");
-      expect($state.get('dashboard').views[''].templateUrl).to.equal(view);
+      expect($state.get('dashboard').views['@'].templateUrl).to.equal(view);
     });
 
     it('should work with $state.go', () => {

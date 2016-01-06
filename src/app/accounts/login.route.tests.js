@@ -19,7 +19,7 @@ describe('login routes', () => {
 
     it('should map /login route to login View template', () => {
       console.log("login should map /login route to login View template");
-      expect($state.get('login').views[''].templateUrl).to.equal(view);
+      expect($state.get('login').views['@'].templateUrl).to.equal(view);
     });
 
     it('should work with $state.go', () => {

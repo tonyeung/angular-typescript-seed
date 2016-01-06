@@ -19,7 +19,7 @@ describe('inventory routes', () => {
 
     it('should map /inventory route to inventory View template', () => {
       console.log("inventory should map /inventory route to inventory View template");
-      expect($state.get('inventory').views[''].templateUrl).to.equal(view);
+      expect($state.get('inventory').views['@'].templateUrl).to.equal(view);
     });
 
     it('should work with $state.go', () => {

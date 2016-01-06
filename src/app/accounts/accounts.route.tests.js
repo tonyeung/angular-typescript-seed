@@ -19,7 +19,7 @@ describe('account routes', () => {
 
     it('should map /accounts route to accounts View template', () => {
       console.log("Accounts should map /accounts route to accounts View template");
-      expect($state.get('accounts').views[''].templateUrl).to.equal(view);
+      expect($state.get('accounts').views['@'].templateUrl).to.equal(view);
     });
 
     it('should work with $state.go', () => {
