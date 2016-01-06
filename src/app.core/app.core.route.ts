@@ -12,13 +12,17 @@ namespace app {
 				views:{
 					'header@' : {
 						templateUrl: 'layout/header.html',
-                        controller: 'HeaderController',
-                        controllerAs: "vm"
+            controller: 'HeaderController',
+            controllerAs: "vm",
+            resolve: {
+              isOpen: () => { return false; }
+            }
+                        
 					},
 					'nav@' : {
 						templateUrl: 'layout/nav.html',
-                        controller: 'NavController',
-                        controllerAs: "vm"
+            controller: 'NavController',
+            controllerAs: "vm"
 					}
 				}
 			})

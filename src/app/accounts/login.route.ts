@@ -19,7 +19,9 @@ namespace app {
 						templateUrl: "accounts/login.html",
 						controller: "LoginController",
 						controllerAs: "vm"
-					}
+					},
+					'header@' : {},
+          'nav@': {}
 				}
 			})
 	}

@@ -1,12 +1,5 @@
-<div ng-switch="$state.current.name" class="header">
-<header layout="row" layout-padding ng-switch-when="login" class="isLogin">
-    <div flex layout="row" layout-align="center center">
-        <a href="/dashboard">
-            ACME Inc
-        </a>
-    </div>
-</header>
-<header layout="row" ng-switch-default layout-align="start center">
+<div class="header">
+<header layout="row" layout-align="start center">
      <md-toolbar layout-padding>
       <div class="md-toolbar-tools">
         <div>
@@ -23,10 +16,24 @@
           </div>
         </div>
         <span flex></span>
-        <!--<md-button class="md-icon-button" aria-label="settings">
-            <md-icon md-font-library="material-icons" class="md-36">more_vert</md-icon>
-        </md-button>-->
       </div>
     </md-toolbar>
+    
+    <md-fab-speed-dial class="md-fling md-fab-top-right" md-open="false">
+      <md-fab-trigger>
+        <md-button class="md-fab md-mini" aria-label="settings">
+            <md-icon md-font-library="material-icons">more_vert</md-icon>
+        </md-button>
+      </md-fab-trigger>
+
+      <md-fab-actions>
+        <md-button aria-label="Accounts" class="md-fab md-raised md-mini" ng-click="vm.route('accounts')">
+            <md-icon md-font-library="material-icons" class="md-dark">person</md-icon>
+        </md-button>
+        <md-button aria-label="Claims" class="md-fab md-raised md-mini" ng-click="vm.route('claims')">
+            <md-icon md-font-library="material-icons" class="md-dark">lock_outline</md-icon>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
 </header>
 </div>

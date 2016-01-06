@@ -1,6 +1,7 @@
 namespace app {
 	export interface IControlNav {
     current: string;
+    closeLeftMenu(): void;
     route(path: string) : void; 
 	}
 	
@@ -11,6 +12,9 @@ namespace app {
       this.current = $state.current.name;
     }
     
+    closeLeftMenu(): void {
+      this.$mdSidenav('left').close();
+    }
     
     route(path: string) : void {
       this.$mdSidenav('left').close();

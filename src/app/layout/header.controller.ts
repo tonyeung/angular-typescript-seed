@@ -1,20 +1,24 @@
 namespace app {
   export interface IControlHeader {
     openLeftMenu(): void;
+    route(path: string) : void;
   }
 
   class HeaderController implements IControlHeader {
 
-    constructor(private $mdSidenav: ng.material.ISidenavService) { }
+    constructor(private $rootScope, private $state: ng.ui.IStateService, private $mdSidenav: ng.material.ISidenavService) {}
 
     openLeftMenu(): void {
-      console.log('open menu');
-
-      this.$mdSidenav('left').toggle();
+      this.$mdSidenav('left').open();
+    }
+    
+    route(path: string) : void {
+      this.$mdSidenav('left').close();
+      this.$state.go(path);
     }
   }
 
   angular
     .module('app.layout')
-    .controller("HeaderController", HeaderController);
+    .controller("HeaderController", HeaderController)
 }

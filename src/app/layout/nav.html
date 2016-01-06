@@ -3,7 +3,7 @@
   <md-toolbar layout-padding>
     <div class="md-toolbar-tools">
       <div>
-        <md-button class="md-icon-button">
+        <md-button class="md-icon-button" ng-click="vm.closeLeftMenu()">
           <md-icon md-font-library="material-icons" class="md-36">menu</md-icon>
         </md-button>
       </div>
@@ -24,13 +24,6 @@
     </md-item>
     <md-item layout-fill>
       <md-item-content layout-fill>
-        <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='accounts'}" ng-disabled="$state.current.name === 'accounts'" ng-click="vm.route('accounts')">
-          Accounts
-        </md-button>
-      </md-item-content>
-    </md-item>
-    <md-item layout-fill>
-      <md-item-content layout-fill>
         <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='inventory'}" ng-disabled="$state.current.name === 'inventory'" ng-click="vm.route('inventory')">
           Inventory
         </md-button>
@@ -40,13 +33,6 @@
       <md-item-content layout-fill>
         <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='reports'}" ng-disabled="$state.current.name === 'reports'" ng-click="vm.route('reports')">
           Reports
-        </md-button>
-      </md-item-content>
-    </md-item>
-    <md-item layout-fill>
-      <md-item-content layout-fill>
-        <md-button layout-fill layout-padding ng-class="{selected: $state.current.name ==='settings'}" ng-disabled="$state.current.name === 'settings'" ng-click="vm.route('settings')">
-          Settings
         </md-button>
       </md-item-content>
     </md-item>

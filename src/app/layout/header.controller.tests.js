@@ -3,10 +3,11 @@ describe('Header Controller', () => {
   var controller;
     
   beforeEach(function() {
-    angular.mock.module('app.layout');
-    bard.inject(this, '$controller', '$rootScope', '$mdSidenav');
-    sinon.spy($mdSidenav('left'), 'toggle');
-    controller = $controller('HeaderController', { $mdSidenav: $mdSidenav });
+    angular.mock.module('app.layout', 'app.home');
+    bard.inject(this, '$controller', '$rootScope', '$mdSidenav', '$state');
+    sinon.spy($mdSidenav('left'), 'open');
+    sinon.spy($state, 'go');
+    controller = $controller('HeaderController', { $state: $state, $mdSidenav: $mdSidenav });
     $rootScope.$apply();
   });
 
@@ -18,6 +19,11 @@ describe('Header Controller', () => {
   
   it('should toggle $mdSidenav when called', function() {
     controller.openLeftMenu();    
-    expect($mdSidenav('left').toggle.calledOnce);
+    expect($mdSidenav('left').open.calledOnce);
+  });
+  
+  it('should call $state.go when route is called', function() {
+    controller.route('dashboard');
+    expect($state.go.calledOnce);
   });
 });

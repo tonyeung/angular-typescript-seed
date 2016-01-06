@@ -6,6 +6,7 @@ namespace app {
     'app.auth',
     'app.layout',
     'app.accounts',
+    'app.claims',
     'app.config',
     'app.home',
     'app.inventory',
