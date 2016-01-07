@@ -1,8 +1,41 @@
 <div class="accounts">
-				
-	<div layout="column">
-    <div></div>
-    <div></div>
-	</div>
-				
+  <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column">
+    <div flex-gt-md="25" flex-md="33" flex-lt-md="100" layout="column" ng-repeat="item in [0,1,2,4,5,6]">
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Card {{item}}</span>
+            <span class="md-subhead">sub header</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content ng-class="{ expanded: open }" class="collapsable">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+           Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+           nisi ut aliquip ex ea commodo consequat. 
+           Duis aute irure dolor in reprehenderit in voluptate 
+           velit esse cillum dolore eu fugiat nulla pariatur. 
+           Excepteur sint occaecat cupidatat non proident, 
+           sunt in culpa qui officia deserunt mollit anim id est laborum
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button ng-click="open = !open">{{open && 'hide' || 'show'}}</md-button>
+          <md-button>Action 2</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+    <!-- needed to left align last row -->
+    <div flex-gt-md="25" flex-md="33" flex-sm="100" flex-xs="100" layout="column">
+      <md-card>
+      </md-card>
+    </div>
+    <div flex-gt-md="25" flex-md="33" flex-sm="100" flex-xs="100" layout="column">
+      <md-card>
+      </md-card>
+    </div>
+    <div flex-gt-md="25" flex-md="33" flex-sm="100" flex-xs="100" layout="column">
+      <md-card>
+      </md-card>
+    </div>
+  </md-content>
 </div>

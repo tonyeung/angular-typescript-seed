@@ -16,3 +16,17 @@ button.md-fab.md-button {
   box-shadow: none !important;
   background-color: rgb(63,81,181);
 }
+
+/* expand collapse element*/
+md-card md-card-content.collapsable {
+    max-height: 0;
+    padding: 0 16px;
+    overflow: hidden;
+    transition: all 1s ease-in;  
+}
+md-card md-card-content.collapsable.expanded {
+    max-height: 500px;
+    padding-top: 16px;
+    transition: all 1s ease-out;
+}
+/* end expand collapse element*/
