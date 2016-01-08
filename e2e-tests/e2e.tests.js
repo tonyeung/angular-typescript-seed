@@ -19,7 +19,7 @@ describe('page heading', function () {
 		expect(form).to.be.ok;
 	});
 
-	it('should be "Dashboard", when authenticated"', function () {
+	it('should be "Dashboard", when authenticated', function () {
 		browser.waitForAngular();
 
 		element(by.name('username')).sendKeys('foo');
@@ -33,5 +33,31 @@ describe('page heading', function () {
 					5000, 
 					'Element taking too long to appear in the DOM'
 		);
+	});
+
+	it('should show menu when menu button clicked ', function () {
+		browser.waitForAngular();
+
+		element(by.name('username')).sendKeys('foo');
+		element(by.name('password')).sendKeys('bar');
+		element(by.name('loginButton')).click();
+		
+		var menuIcon = element(by.cssContainingText("header button md-icon", "menu"));
+		var until = protractor.ExpectedConditions;
+		browser.wait(until
+					.presenceOf(menuIcon), 
+					5000, 
+					'Element taking too long to appear in the DOM'
+		);
+    
+    
+    browser.findElement(by.cssContainingText("header button md-icon", "menu")).then(function (result) {
+      console.log(result);
+      var menuButton = result.findElement(by.xpath('ancestor::button'));
+      menuButton.click();
+      
+      var backdrop = element(by.css('div[ui-view="nav"] md-backdrop'));
+		  expect(backdrop).to.be.ok;
+    });
 	});
 });

@@ -16,8 +16,8 @@ namespace app {
 				views:{
 					'@' : {
 						templateUrl: "inventory/inventory.html",
-						// controller: "LoginController",
-						// controllerAs: "vm"				
+						controller: "InventoryController",
+						controllerAs: "vm"				
 					}
 				}
 			})

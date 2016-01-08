@@ -4,6 +4,7 @@ namespace app {
   angular.module('app.inventory', [
     'app.core',
     'app.auth',
-    'ui.router'
+    'ui.router',
+    'agGrid'
   ]);
 }

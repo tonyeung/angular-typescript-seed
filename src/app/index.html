@@ -21,10 +21,10 @@
   <!-- inject:css -->
   <!-- endinject -->
 </head>
-<body>
+<body layout="column">
 	<div ui-view='header' ng-cloak></div>
 	<div ui-view='nav' ng-cloak></div>
-    <div ui-view class='body-content' ng-cloak></div>
+    <div ui-view class='body-content' ng-cloak layout="column" flex></div>
 	<div ui-view='aside' ng-cloak></div>
 	<div ui-view='footer' ng-cloak></div>
     

@@ -61,6 +61,9 @@
     },
     "angular-material/angular-material.d.ts": {
       "commit": "bdaf2f0eb19edee26248c80bab4947e9b70e4217"
+    },
+    "ag-grid/ag-grid.d.ts": {
+      "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
     }
   }
 }
