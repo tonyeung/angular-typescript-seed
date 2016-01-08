@@ -52,7 +52,6 @@ describe('page heading', function () {
     
     
     browser.findElement(by.cssContainingText("header button md-icon", "menu")).then(function (result) {
-      console.log(result);
       var menuButton = result.findElement(by.xpath('ancestor::button'));
       menuButton.click();
       

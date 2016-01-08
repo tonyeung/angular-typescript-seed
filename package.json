@@ -33,6 +33,7 @@
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0",
     "mocha": "^2.3.4",
+    "mochawesome": "^1.2.1",
     "moment": "^2.11.0",
     "protractor": "^3.0.0",
     "run-sequence": "^1.1.5",

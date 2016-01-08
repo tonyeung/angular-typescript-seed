@@ -36,8 +36,10 @@
   gulp.task('start-syncing-dev-site', startSyncingDev);
   gulp.task('start-automated-unit-tests', startUnitTests);
   gulp.task('start-e2e', startEnd2End);
+  gulp.task('start-e2e-results-server', startE2eResultsServer)
   gulp.task('wait-for-last-change', waitForLastChange);
   gulp.task('restart-e2e', ['wait-for-last-change'], startEnd2End);
+  gulp.task('watch-e2e-results', ['start-e2e'], watchE2eResults);
 
   ///////////////////////////////////////////////////////
   // TASK IMPLEMENTATIONS
@@ -46,7 +48,8 @@
       runSequence('compile', 
                 'watch-src', 
                 ['start-syncing-dev-site', 'start-automated-unit-tests'],
-                ['start-e2e', 'watch-dev', 'watch-e2e'],
+                ['start-e2e', 'watch-dev', 'watch-e2e', 'watch-e2e-results'],
+                'start-e2e-results-server',
                 callback);
   }
   
@@ -78,6 +81,14 @@
   ///////////////////////////////////////////////////////
   function watchE2e() {
       return gulp.watch('e2e-tests/*', ['start-e2e']);
+  }
+  
+  function watchE2eResults() {
+      return gulp.watch('mochawesome-reports/*', function(){
+        var browserSync = require('browser-sync');
+        var e2e = browserSync.get('e2e');
+        e2e.reload();        
+      });
   }
 
 
@@ -181,6 +192,9 @@
     common.startE2e(gulp, plumber, 'http://localhost:8000', callback);
   }
   
+  function startE2eResultsServer(callback) {
+    common.startBrowserSync('e2e', 8010, './mochawesome-reports', callback, 'mochawesome.html');
+  }
 
   ///////////////////////////////////////////////////////
   function waitForLastChange(callback) {
