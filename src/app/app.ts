@@ -11,7 +11,6 @@ namespace app {
     'app.home',
     'app.inventory',
     'app.reports',
-    'app.settings',
     'app.toastrLogging',
     'ngMaterial',
     'ngMessages'
