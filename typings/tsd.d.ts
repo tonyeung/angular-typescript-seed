@@ -16,3 +16,4 @@
 /// <reference path="angular-local-storage/angular-local-storage.d.ts" />
 /// <reference path="angular-material/angular-material.d.ts" />
 /// <reference path="ag-grid/ag-grid.d.ts" />
+/// <reference path="angularjs/angular-resource.d.ts" />

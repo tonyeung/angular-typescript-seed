@@ -2,3 +2,4 @@ tsd query -roa install angular-ui-router angular jquery bootstrap chai assertion
 tsd install bardjs -ros 
 tsd install angular-material -ros
 tsd install ag-grid -ros
+tsd install angular-resource -ros

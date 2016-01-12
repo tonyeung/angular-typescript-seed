@@ -24,9 +24,9 @@ module.exports = {
                 .pipe(tsc(tsc.createProject('tsconfig.json')))
                 .pipe(ngAnnotate());
   },
-  startBrowserSync: function(instanceName, port, baseDir, callback, startPath) {
-    var historyApiFallback = require('connect-history-api-fallback');
+  startBrowserSync: function(instanceName, port, baseDir, callback, middleware, startPath) {
     var browserSync = require('browser-sync').create(instanceName);
+    
     var initOptions = {
       port: port,
       ui: false,
@@ -36,14 +36,15 @@ module.exports = {
           '/bower_components': './bower_components',
           '/node_modules': './node_modules'  
         },
-        middleware: [historyApiFallback()]
+        middleware: middleware
       },
       reloadDelay: 1000,
       notify: false
     }
     
     if (startPath) {
-        initOptions.startPath = startPath;
+      console.log(startPath);
+      initOptions.startPath = startPath;
     }
     browserSync.init(initOptions, callback);
   },

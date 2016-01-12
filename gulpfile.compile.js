@@ -178,13 +178,23 @@
 
   ///////////////////////////////////////////////////////
   function startSyncingDev(callback) {
-    common.startBrowserSync('dev', 8000, './dev', callback);
+    var historyApiFallback = require('connect-history-api-fallback');
+    common.startBrowserSync('dev', 8000, './dev', callback, [historyApiFallback(), routes]);
+    
+    function routes(req, res, next) {
+      console.log(req.url);
+      if(req.url == '/users') {
+        res.end('[{ "id": 1, "email": "", "passwordHash": "", "claims": [] }]');
+      }
+      
+      next();
+    }
   }
-  
 
   ///////////////////////////////////////////////////////
   function startUnitTests(callback) {
-    common.startBrowserSync('ut', 9000, './unit-tests', callback, 'mocha-test-runner.html');
+    var historyApiFallback = require('connect-history-api-fallback');
+    common.startBrowserSync('ut', 9000, './unit-tests', callback, [historyApiFallback()], 'mocha-test-runner.html');
   }
 
   ///////////////////////////////////////////////////////
@@ -193,7 +203,8 @@
   }
   
   function startE2eResultsServer(callback) {
-    common.startBrowserSync('e2e', 8010, './mochawesome-reports', callback, 'mochawesome.html');
+    var historyApiFallback = require('connect-history-api-fallback');
+    common.startBrowserSync('e2e', 8010, './mochawesome-reports', callback, [historyApiFallback()], 'mochawesome.html');
   }
 
   ///////////////////////////////////////////////////////

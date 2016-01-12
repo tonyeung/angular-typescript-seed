@@ -114,7 +114,8 @@
   
   ///////////////////////////////////////////////////////
   function startDummyDistServer(callback) {
-    common.startBrowserSync('dist', 8001, './dist', callback);
+    var historyApiFallback = require('connect-history-api-fallback');
+    common.startBrowserSync('dist', 8001, './dist', callback, [historyApiFallback()]);
   }
   
   ///////////////////////////////////////////////////////

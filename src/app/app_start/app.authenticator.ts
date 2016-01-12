@@ -2,15 +2,23 @@
 namespace app {
   'use strict';
 
-  interface IHaveAuthenticationLogic {
-    authenticate(params?: any): app.auth.IAmAUser;
-  }
 
-  class Authenticator implements IHaveAuthenticationLogic {
-    constructor() { }
+  export class Authenticator implements app.auth.IHaveAuthenticationLogic {
+    
+    constructor(private resourceBuilder: app.data.IBuildResources<app.auth.IAmAUser>, private $q: ng.IQService) {
+    }
 
-    public authenticate(user: app.auth.IAmAUser): app.auth.IAmAUser {
-      return user;
+    public authenticate(username: string, password: string): ng.IPromise<ng.IHttpPromiseCallbackArg<app.auth.IAmAUser>> {
+       
+      var defer: ng.IDeferred<ng.IHttpPromiseCallbackArg<app.auth.IAmAUser>> = this.$q.defer();
+      var userResource = this.resourceBuilder
+                              .getResource('users');
+      
+      var users = userResource.query(() => {
+        var user = users[0];
+        defer.resolve(user);
+      });
+      return defer.promise;
     }
   }
 
