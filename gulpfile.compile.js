@@ -182,7 +182,6 @@
     common.startBrowserSync('dev', 8000, './dev', callback, [historyApiFallback(), routes]);
     
     function routes(req, res, next) {
-      console.log(req.url);
       if(req.url == '/users') {
         res.end('[{ "id": 1, "email": "", "passwordHash": "", "claims": [] }]');
       }
