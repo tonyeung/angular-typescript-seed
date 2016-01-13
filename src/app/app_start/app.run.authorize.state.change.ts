@@ -13,7 +13,8 @@ namespace app {
                           $stateParams: ng.ui.IStateParamsService, 
                           $timeout: angular.ITimeoutService,
                           authenticationManager: app.auth.IManageAuthentication, 
-                          authorizationManager: app.auth.IManageAuthorization) {
+                          authorizationManager: app.auth.IManageAuthorization,
+                          DEBUG_AUTH) {
     $rootScope.$on('$stateChangeStart', checkClaims);
 
     function checkClaims(event: ng.IAngularEvent, 
@@ -21,6 +22,8 @@ namespace app {
                           toStateParams: ng.ui.IStateParamsService) {
       $rootScope.toState = toState;
       $rootScope.toStateParams = toStateParams;
+
+      if (DEBUG_AUTH) return;
 
       if (toState.data.public) {
         return;
