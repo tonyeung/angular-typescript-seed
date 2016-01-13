@@ -9,7 +9,7 @@
         </div>
         <div layout="column">
           <div class="brand">
-              <a href="/dashboard">ACME Inc</a>
+              <a href="/dashboard" ng-bind="$state.get('root').data.siteTitle">Site Title</a>
           </div>
           <div class="breadcrumb">
               <span ng-bind="$state.current.data.pageTitle">page title</span>

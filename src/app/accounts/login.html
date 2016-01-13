@@ -2,8 +2,8 @@
   
 <header layout="row" layout-padding>
     <div flex layout="row" layout-align="center center">
-        <a href="/dashboard">
-            ACME Inc
+        <a href="/dashboard" ng-bind="$state.get('root').data.siteTitle">
+            site header name
         </a>
     </div>
 </header>

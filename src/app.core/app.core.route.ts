@@ -5,10 +5,13 @@ namespace app {
 		.module('app.core')
 		.config(ConfigureState);
 
-	function ConfigureState($stateProvider: ng.ui.IStateProvider) {
+	function ConfigureState($stateProvider: ng.ui.IStateProvider, SITE_HEADER_NAME) {
 		$stateProvider
 			.state("root", {
         abstract: true,
+        data: {
+          siteTitle: SITE_HEADER_NAME
+        },
 				views:{
 					'header@' : {
 						templateUrl: 'layout/header.html',

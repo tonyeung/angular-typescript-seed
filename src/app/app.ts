@@ -2,6 +2,7 @@ namespace app {
   'use strict';
   
   angular.module('app', [
+    'app.constants',
     'app.core',
     'app.data',
     'app.auth',

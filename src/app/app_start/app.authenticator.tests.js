@@ -10,7 +10,7 @@ describe('Authenticator', () => {
         expect(authenticator).to.be.ok;
     });
 
-    it('should return a user', (done => {
+    it('should return a user', (done) => {
       console.log('Authenticator should return a user');
         $httpBackend.expectGET('http://localhost:8000/users')
           .respond([{
