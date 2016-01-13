@@ -32,7 +32,7 @@ namespace app.auth {
             }
         }
 
-        public authenticate(...args: any[]): ng.IPromise<ng.IHttpPromiseCallbackArg<IAmAUser>> {
+        public authenticate = (...args: any[]): ng.IPromise<ng.IHttpPromiseCallbackArg<IAmAUser>> => {
           var defer: ng.IDeferred<ng.IHttpPromiseCallbackArg<IAmAUser>> = this.$q.defer();
           if (!this.authenticator) {
             throw new Error("AuthenticateLogic has not been set. If you are seeing this error, the code in app.run.configure.auth is not being run.")
@@ -52,7 +52,7 @@ namespace app.auth {
           return defer.promise;
         }
 
-        public signOut(): void {
+        public signOut = (): void => {
             this.user = { id: 0, claims: [], passwordHash: '', email: '' };
             this.isAuthenticated = false;
             this.localStorageService.remove('user');

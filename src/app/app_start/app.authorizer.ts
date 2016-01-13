@@ -2,18 +2,15 @@
 namespace app {
   'use strict';
   
-    interface IHaveAuthorizationLogic {
-		authorize(authenticationManager: app.auth.IManageAuthentication, params?: any): boolean;
-	}
+  class Authorizer implements app.auth.IHaveAuthorizationLogic {
+    constructor(private authenticationManager: app.auth.IManageAuthentication) { }
 
-    class Authorizer implements IHaveAuthorizationLogic {
-        constructor() {}
-
-        public authorize(authenticationManager: app.auth.IManageAuthentication, params?: any): boolean {
-			     return true;
-        }
+    public authorize = (name: string): boolean => {
+      var user = this.authenticationManager.user;      
+      return true;
     }
-	
+  }
+
   angular.module('app.config')
-		.service("authorizer", Authorizer);
+    .service("authorizer", Authorizer);
 }

@@ -6,10 +6,14 @@ namespace app {
 		.run(ConfigureAuthentication)
 		.run(ConfigureAuthorization);
 
-	function ConfigureAuthentication(authenticationManager: app.auth.IManageAuthentication, authenticator: app.auth.IHaveAuthenticationLogic) {
+
+  import IManageAuthentication = app.auth.IManageAuthentication;
+  import IHaveAuthenticationLogic = app.auth.IHaveAuthenticationLogic;
+
+	function ConfigureAuthentication(authenticationManager: IManageAuthentication, authenticator: IHaveAuthenticationLogic) {
 		authenticationManager.authenticator = authenticator;
 	}
-	function ConfigureAuthorization(authorizationManager, authorizer) {
+	function ConfigureAuthorization(authorizationManager: app.auth.IManageAuthorization, authorizer) {
 		authorizationManager.authorize = authorizer.authorize;
 	}
 }

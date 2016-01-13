@@ -5,9 +5,9 @@ namespace app {
     .module('app.config')
     .run(debugEvents);
 
-  function debugEvents($rootScope) {
+  function debugEvents($rootScope, DEBUG_ROUTER) {
 
-    if (true) {
+    if (DEBUG_ROUTER) {
 
       $rootScope
         .$on('$stateChangeStart',

@@ -32,7 +32,7 @@ namespace app {
       }
 
       // need to stick some data into the authorize method
-      if (!authorizationManager.authorize(authenticationManager)) {
+      if (!authorizationManager.authorize(toState.name)) {
         $timeout(() => { $state.go('no access'); });
         return;
       }

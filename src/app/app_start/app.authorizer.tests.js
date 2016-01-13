@@ -1,9 +1,8 @@
-describe('Authorizer factory', () => {
+describe('Authorizer', () => {
   	var expect = chai.expect;
     beforeEach(function () {
-      bard.appModule('app.config');
-      bard.appModule('app.auth');
-      bard.inject(this, 'authorizer', 'authenticationManager');
+      bard.appModule('app.config', 'app.auth', 'app.data');
+      bard.inject(this, 'authorizer');
     });
 
     it('should not be null', () => {
@@ -11,6 +10,6 @@ describe('Authorizer factory', () => {
     });
 
     it('should return true', () => {
-        expect(authorizer.authorize(authenticationManager)).to.be.true;
+        expect(authorizer.authorize('foo')).to.be.true;
     });
 });

@@ -2,7 +2,7 @@ describe('authentication manager', () => {
   	var expect = chai.expect;
     beforeEach(function () {
         angular.mock.module('app.auth');
-        bard.inject(this, 'authenticationManager');
+        bard.inject(this, '$rootScope', '$q', '$timeout', 'authenticationManager');
     });
     
     it('should not be null',  () => {
@@ -20,49 +20,77 @@ describe('authentication manager', () => {
     describe('when authenticated', () => {
         
         beforeEach(function () {
-            authenticationManager.authenticatorLogic = function() { 
-                this.user = { id: 1, claims: [] }; 
-                return this.user 
+            authenticationManager.authenticator = {
+              authenticate: () => {
+                  var deferred = $q.defer();
+                  this.user = { id: 1, claims: [] };
+                  deferred.resolve(this.user);
+                   
+                  return deferred.promise; 
+                }
             };
         });
         
-        it('should store the authentication logic', () => {
+        it('should store the authentication logic', (done) => {
             console.log('authentication manager should store the authentication logic');
-            
-            expect(authenticationManager.authenticate().id === 1).to.be.true;
+
+            authenticationManager.authenticate().then(
+              (user) => {
+                expect(user.id === 1).to.be.true;
+                done();
+              }
+            ); 
+            $rootScope.$digest();
         });
     
-        it('should return a user after calling authenticate()',  () => {
+        it('should return a user after calling authenticate()',  (done) => {
             console.log('should return a user after calling authenticate()');
             
-            var user = authenticationManager.authenticate();
-    
-            expect(user.id === 1).to.be.true;
+            authenticationManager.authenticate().then(
+              (user) => {
+                expect(user.id === 1).to.be.true;
+                done();
+              }
+            );
+            $rootScope.$digest();
         });
     
-        it('should have a user after authenticating',  () => {
+        it('should have a user after authenticating',  (done) => {
             console.log('authentication manager should have a user after authenticating');
     
-            authenticationManager.authenticate();
-    
-            expect(authenticationManager.user.id === 1).to.be.true;
+            authenticationManager.authenticate().then(
+              (user) => {
+                expect(authenticationManager.user.id === 1).to.be.true;
+                done();
+              }
+            );
+            $rootScope.$digest();
         });
     
-        it('should return true if a user is already authenticated',  () => {
+        it('should return true if a user is already authenticated',  (done) => {
             console.log('authentication manager should return true if a user is already authenticated');
             
-            authenticationManager.authenticate();
-    
-            expect(authenticationManager.isAuthenticated).to.be.true;
+            authenticationManager.authenticate().then(
+              (user) => {
+                expect(authenticationManager.isAuthenticated).to.be.true;
+                done();
+              }
+            );
+            $rootScope.$digest();
         });
     
-        it('should return false if a user authenticates and then signs out',  () => {
+        it('should return false if a user authenticates and then signs out',  (done) => {
             console.log('authentication manager should return true if a user authenticates and then signs out');
             
-            authenticationManager.authenticate();
-            authenticationManager.signOut();
-    
-            expect(authenticationManager.isAuthenticated).to.be.false;
+            authenticationManager.authenticate().then(
+              (user) => {
+                authenticationManager.signOut();
+        
+                expect(authenticationManager.isAuthenticated).to.be.false;
+                done();
+              }
+            );
+            $rootScope.$digest();
         });
     })
 });

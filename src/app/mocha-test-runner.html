@@ -39,6 +39,7 @@
     expect = chai.expect;
         AssertionError = chai.AssertionError;
         mocha.setup('bdd');
+        mocha.setup({ timeout: 30000 });
         mocha.traceIgnores = ['mocha.js', 'chai.js', 'angular.js'];
   </script>
 
