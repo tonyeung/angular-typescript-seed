@@ -7,7 +7,7 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;
 
 beforeEach(function () {
-	browser.get('/');
+	browser.get('/login');
 });
 
 describe('page heading', function () {

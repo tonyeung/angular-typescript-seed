@@ -3,18 +3,14 @@
 module.exports = {
 	tsFiles: [
 		'typings/tsd.d.ts',
-		'src/app.toastrLogging/app.toastrLogging.ts',
-		'src/app.globalErrorDecorator/app.globalErrorDecorator.ts',
-		'src/app.auth/app.auth.ts',
-		'src/app.core/app.core.ts',
-		'src/app/app.ts',
-		'src/app/accounts/app.accounts.ts',
-		'src/app/app_start/app.config.ts',
-		'src/app/claims/app.claims.ts',
-		'src/app/home/app.home.ts',
-		'src/app/inventory/app.inventory.ts',
-		'src/app/reports/app.reports.ts',
-		'src/app/settings/app.settings.ts',
+		'src/app.toastrLogging/app.toastrLogging.module.ts',
+		'src/app.globalErrorDecorator/app.globalErrorDecorator.module.ts',
+		'src/app.constants/app.constants.module.ts',
+		'src/app.data/app.data.module.ts',
+		'src/app.auth/app.auth.module.ts',
+		'src/app.core/app.core.module.ts',
+		'src/app/app.module.ts',
+		'src/app/**/*.module.ts',
 		'src/**/*.ts'
 		],
 
